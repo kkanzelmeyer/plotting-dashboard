@@ -157,7 +157,9 @@ export class CoreLayout extends React.Component {
     if (router) {
       title =
         router.isActive('/calls') ? 'Calls'
-        : router.isActive('/partners') ? 'Partners' : Theme.appName;
+        : router.isActive('/partners') ? 'Partners'
+        : router.isActive('/plot') ? 'Plots'
+        : Theme.appName;
     }
 
     let docked = false;

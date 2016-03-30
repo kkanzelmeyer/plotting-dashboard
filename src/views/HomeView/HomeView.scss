@@ -7,7 +7,7 @@
   color: rgb(25,200,25);
 }
 
-#fileDrag
+#dropzone
 {
 	// display: none;
 	font-weight: bold;
@@ -20,7 +20,7 @@
 	cursor: pointer;
 }
 
-#fileDrag.hover
+#dropzone.hover
 {
 	color: #f00;
   background-color: #aaa;

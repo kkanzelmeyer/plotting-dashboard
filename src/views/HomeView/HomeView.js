@@ -1,41 +1,37 @@
 import React from 'react';
-import styles from './HomeView.scss';
-import logger from '../../logger';
+import Dropzone from 'react-dropzone';
+import './HomeView.scss';
 
 export class HomeView extends React.Component {
 
+  onDrop = function (files) {
+    console.log('Received files: ', files);
+  };
+
+  // TODO make dropzone full screen
+  dropzoneStyle = {
+    textAlign: 'center',
+    padding: '200px 0',
+    margin: '0',
+    color: '#aaa',
+    border: '2px dashed #aaa',
+    borderRadius: '7px',
+    cursor: 'pointer'
+  };
+
   render () {
     return (
-      <div className='container text-center'>
+      <div className='container-fluid'>
         <div className='row'>
-          <div className='col-xs-3 col-xs-offset-4'>
-            <label>Select JSON Log:</label>
-            <input type='file' id='file' name='file'/>
-          </div>
+          <Dropzone onDrop={this.onDrop} style={this.dropzoneStyle}>
+            <h3>Drag and drop log file here</h3>
+            <h5>Or click to browse for log file</h5>
+          </Dropzone>
         </div>
-        <div className='row'>
-          <div id={styles.fileDrag}>
-            <h3>or drop files here</h3>
-          </div>
-        </div>
-      </div>
+      </div >
     );
-  }
+  };
+
 }
-
-const dropbox = document.getElementById('fileDrag');
-dropbox.addEventListener('drop', loadData, false);
-
-const loadData = (e) => {
-  logger.debug('Loading data');
-  e.stopPropagation();
-  e.preventDefault();
-
-  var dt = e.dataTransfer;
-  var files = dt.files;
-
-  logger.debug('Finished loading');
-  logger.debug(files.size);
-};
 
 export default HomeView;
