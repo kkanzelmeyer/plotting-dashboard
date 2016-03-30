@@ -1,4 +1,6 @@
-import { fromJS } from 'immutable';
+import {
+  fromJS
+} from 'immutable';
 
 export const SET_PARTNER = 'SET_PARTNER';
 export const SET_PARTNERS = 'SET_PARTNERS';
@@ -9,7 +11,10 @@ export const REDO_UPDATE_PARTNER = 'REDO_UPDATE_PARTNER';
 export const RESET_PARTNER_CHANGES = 'RESET_PARTNER_CHANGES';
 export const CLEAR_PARTNER_CHANGES = 'CLEAR_PARTNER_CHANGES';
 
-export const setPartner = ({ key, data }) => ({
+export const setPartner = ({
+  key,
+  data
+}) => ({
   type: SET_PARTNER,
   payload: {
     key,
@@ -46,8 +51,16 @@ export const clearPartnerChanges = () => ({
   type: CLEAR_PARTNER_CHANGES
 });
 
-const partnerReducer = (state, { payload: { key, data } }) => state.set(key, fromJS(data));
-const partnersReducer = (state = fromJS({}), { payload }) => state.mergeDeep(fromJS(payload));
+const partnerReducer = (state, {
+  payload: {
+    key,
+    data
+  }
+}) => state.set(key, fromJS(data));
+
+const partnersReducer = (state = fromJS({}), {
+  payload
+}) => state.mergeDeep(fromJS(payload));
 
 export default (state = fromJS({}), action) => {
   switch (action.type) {

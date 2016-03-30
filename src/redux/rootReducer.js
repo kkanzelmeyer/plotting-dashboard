@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routeReducer as router } from 'react-router-redux';
 import calls from './modules/calls';
 import partners, * as partnerActions from './modules/partners';
+import data from './modules/log-data.js';
 import undoable from 'redux-undo';
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
     clearHistoryType: partnerActions.CLEAR_PARTNER_CHANGES,
     initActions: [partnerActions.SET_PARTNERS]
   }),
+  data,
   router
 });

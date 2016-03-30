@@ -164,6 +164,7 @@
     "webpack": "1.12.9",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
+    "winston": "^2.2.0",
     "yargs": "^3.18.0"
   },
   "bin": {
