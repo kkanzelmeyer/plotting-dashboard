@@ -3,9 +3,13 @@ import React from 'react';
 export class PlotView extends React.Component {
   render () {
     return (
-      <div>
-        <h4>Under Construction</h4>
-      </div>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div idName='plotView'>
+            // Leave this div empty for the Plotly plot
+          </div>
+        </div>
+      </div >
     );
   };
 }
