@@ -1,8 +1,9 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import { createStore } from 'redux';
+import { connect } from 'react-redux';
 import './HomeView.scss';
-import { dataModule, addData, clearData } from '../../redux/modules/log-data';
+import dataModule, { addData, clearData } from '../../redux/modules/log-data';
 
 export class HomeView extends React.Component {
 
@@ -29,6 +30,7 @@ export class HomeView extends React.Component {
       // then add new data
       action = addData(logData);
       store.dispatch(action);
+      console.debug(store.getState());
     });
     fr.readAsText(files[0]);
   };
@@ -65,4 +67,8 @@ export class HomeView extends React.Component {
 
 }
 
-export default HomeView;
+const mapStateToProps = (state) => ({
+  data: state.data
+});
+
+export default connect(mapStateToProps)(HomeView);

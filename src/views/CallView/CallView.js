@@ -77,7 +77,8 @@ export class CallView extends React.Component {
 
 const mapStateToProps = (state) =>
   ({
-    calls: state.calls.map((call) => call.set('partner', state.partners.present.get(call.get('partnerId'))))
+    calls: state.calls.map((call) => call.set('partner',
+    state.partners.present.get(call.get('partnerId'))))
   });
 
 export default connect(mapStateToProps)(CallView);

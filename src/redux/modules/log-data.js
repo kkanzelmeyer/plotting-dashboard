@@ -1,4 +1,4 @@
-// import { fromJS } from 'immutable';
+import { fromJS } from 'immutable';
 import Action from '../action';
 
 /**
@@ -38,20 +38,28 @@ export const clearData = () => {
  * @param  {[type]} state  [description]
  * @param  {[type]} action [description]
  */
-const dataReducer = (state, action) => {
+const dataReducer = (data, action) => {
   switch (action.type) {
 
     case type.SET_DATA:
     case type.CLEAR_DATA:
-      return action.payload.slice();
+      return fromJS(action.payload);
 
     default:
-      return state;
+      return data;
   }
 };
 
-export const dataModule = (state = {}, action) => {
+/**
+ * Data Module combined reducer
+ * @param  {[obj]} state  = {} Default state
+ * @param  {[obj]} action redux action
+ * @return {[obj]} the new data state
+ */
+const dataModule = (state = {}, action) => {
   return {
     data: dataReducer(state.data, action)
   };
 };
+
+export default dataModule;
