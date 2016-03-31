@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+// import { fromJS } from 'immutable';
 import Action from '../action';
 
 /**
@@ -15,20 +15,22 @@ export const type = {
  * @param  {[data]} data The data to add
  */
 export const addData = (data) => {
+  console.debug('Adding data');
   return new Action(
     type.SET_DATA,
     data
-  );
+  ).toObject();
 };
 
 /**
  * Action to clear the data from the state
  */
 export const clearData = () => {
+  console.debug('Clearing data');
   return new Action(
     type.CLEAR_DATA,
-    {}
-  );
+    []
+  ).toObject();
 };
 
 /**
@@ -41,7 +43,7 @@ const dataReducer = (state, action) => {
 
     case type.SET_DATA:
     case type.CLEAR_DATA:
-      return state.set('data', fromJS(action.payload));
+      return action.payload.slice();
 
     default:
       return state;
@@ -50,6 +52,6 @@ const dataReducer = (state, action) => {
 
 export const dataModule = (state = {}, action) => {
   return {
-    data: dataReducer(state, action)
+    data: dataReducer(state.data, action)
   };
 };
