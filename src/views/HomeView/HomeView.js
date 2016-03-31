@@ -1,7 +1,8 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import { createStore } from 'redux';
 import './HomeView.scss';
-import { loadData, type } from '../../redux/modules/log-data';
+import { addData, type, dataModule } from '../../redux/modules/log-data';
 
 export class HomeView extends React.Component {
 
@@ -12,13 +13,17 @@ export class HomeView extends React.Component {
   onDrop = function (files) {
     console.debug('Received files: ', files);
 
+    // create store
+    let store = createStore(dataModule);
+
     const fr = new FileReader();
 
     fr.addEventListener('load', function (e) {
       console.debug('Finished loading file');
       const logData = '[' + e.target.result.replace(/[,]\s+$/g, '') + ']';
       console.debug(logData);
-      loadData(type.SET_DATA, logData);
+      const action = addData(type.SET_DATA, logData);
+      store.dispatch(action);
     });
 
     fr.readAsText(files[0]);
