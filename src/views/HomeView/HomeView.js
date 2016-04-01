@@ -62,7 +62,7 @@ export class HomeView extends React.Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          height: 'calc(100vh - 85px)'
+          height: 'calc(100vh - 88px)'
         }}
       >
         <Dropzone onDrop={this.onDrop} style={this.dropzoneStyle}>

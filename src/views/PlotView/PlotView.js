@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import PlotDemo from 'components/plots/PlotDemo';
 
 export class PlotView extends React.Component {
 
@@ -10,14 +11,27 @@ export class PlotView extends React.Component {
     const { params } = this.props;
     console.debug(params.plotType);
 
+    switch (params.plotType) {
+      case 'plot-demo':
+        this.plot = <PlotDemo />;
+        break;
+
+      default:
+        break;
+    }
+
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          <div idName='plotView'>
-            // Leave this div empty for the Plotly plot
-          </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100vh - 88px)'
+        }}
+      >
+        <div idName='plotView'>
+          {this.plot}
         </div>
-      </div >
+      </div>
     );
   };
 }
