@@ -20,7 +20,7 @@ export default (store) => (
     <Route path='/partners' component={PartnerView} />
     <Route path='/calls' component={CallView} />
     <Route path='/404' component={NotFoundView} />
-    <Route path='/plot' component={PlotView} />
+    <Route path='/plot/:plotType' component={PlotView} />
     <Route path='/summary' component={SummaryView} />
     <Redirect from='*' to='/404' />
   </Route>

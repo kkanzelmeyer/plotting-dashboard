@@ -6,8 +6,7 @@ import Action from '../action';
  * @type {Object}
  */
 export const type = {
-  SET_DATA: 'SET_DATA',
-  CLEAR_DATA: 'CLEAR_DATA'
+  SET_DATA: 'SET_DATA'
 };
 
 /**
@@ -23,43 +22,19 @@ export const addData = (data) => {
 };
 
 /**
- * Action to clear the data from the state
- */
-export const clearData = () => {
-  console.debug('Clearing data');
-  return new Action(
-    type.CLEAR_DATA,
-    []
-  ).toObject();
-};
-
-/**
  * Reducer for handling data actions
  * @param  {[type]} state  [description]
  * @param  {[type]} action [description]
  */
-const dataReducer = (data, action) => {
+const dataReducer = (state = fromJS([]), action) => {
   switch (action.type) {
 
     case type.SET_DATA:
-    case type.CLEAR_DATA:
       return fromJS(action.payload);
 
     default:
-      return data;
+      return state;
   }
 };
 
-/**
- * Data Module combined reducer
- * @param  {[obj]} state  = {} Default state
- * @param  {[obj]} action redux action
- * @return {[obj]} the new data state
- */
-const dataModule = (state = {}, action) => {
-  return {
-    data: dataReducer(state.data, action)
-  };
-};
-
-export default dataModule;
+export default dataReducer;

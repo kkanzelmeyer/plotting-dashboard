@@ -86,9 +86,9 @@ export default class AppLeftNav extends React.Component {
           valueLink={{ value: location.pathname, requestChange: onRequestChangeList }}
         >
           <ListItem primaryText='Summary' value='/' />
-          <ListItem primaryText='Position 2D' value='/plot' />
-          <ListItem primaryText='Position 3D' value='/plot' />
-          <ListItem primaryText='All Tracks' value='/plot' />
+          <ListItem primaryText='Position 2D' value='/plot/position-2D' />
+          <ListItem primaryText='Position 3D' value='/plot/position-3D' />
+          <ListItem primaryText='All Tracks' value='/plot/all-tracks' />
         </SelectableList>
       </LeftNav>
     );

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export class PlotView extends React.Component {
+
+  static propTypes = {
+    params: PropTypes.object
+  }
+
   render () {
+    const { params } = this.props;
+    console.debug(params.plotType);
+
     return (
       <div className='container-fluid'>
         <div className='row'>
