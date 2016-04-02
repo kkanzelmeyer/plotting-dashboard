@@ -41,7 +41,7 @@ class PlotDemo extends Component {
 
   render () {
     return (
-      <Plotly className='position3d'
+      <Plotly className='plot-demo'
         data={this.data}
         layout={this.layout}
         config={this.config}
