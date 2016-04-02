@@ -6,7 +6,8 @@ class Position3D extends Component {
   // data should be an array of track and truth data
   // filtered by a track id
   static propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object,
+    title: PropTypes.string
   }
 
   createPlotData () {
@@ -50,7 +51,7 @@ class Position3D extends Component {
 
   createLayout () {
     return {
-      title: 'Position ECEF'
+      title: this.props.title
     };
   }
 

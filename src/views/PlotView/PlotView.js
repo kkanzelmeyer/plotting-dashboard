@@ -7,7 +7,13 @@ import SelectableList from 'components/SelectableList';
 import ListItem from 'material-ui/lib/lists/list-item';
 
 export class PlotView extends React.Component {
-
+  constructor () {
+    super();
+    this.state = {
+      selectedIndex: 2008
+    };
+    this.updatePlot = this.updatePlot.bind(this);
+  }
   static propTypes = {
     params: PropTypes.object,
     data: PropTypes.object
@@ -25,17 +31,23 @@ export class PlotView extends React.Component {
     }
   }
 
+  updatePlot (selectedIndex) {
+    console.debug(`updating plot ${selectedIndex}`);
+    this.setState({
+      selectedIndex
+    });
+  }
+
   render () {
     const { params, data } = this.props;
-
+    const { selectedIndex } = this.state;
     // get list of ids
     const ids = data.map((row) => row.get('id')).toSet();
     console.debug(ids);
 
     // get all data for an id
     // TODO value should come from the list
-    const selected = 2008;
-    const filteredData = data.filter((row) => row.get('id') === selected);
+    const filteredData = data.filter((row) => row.get('id') === selectedIndex);
     console.debug(filteredData);
 
     switch (params.plotType) {
@@ -46,7 +58,7 @@ export class PlotView extends React.Component {
       case 'position-3d':
         this.plot = <Position3D
           data={filteredData}
-          id={selected}
+          title={`Position ECEF - Track ${selectedIndex}`}
           />;
         break;
 
@@ -63,6 +75,8 @@ export class PlotView extends React.Component {
           <SelectableList
             style={this.styles.list}
             subheader='Track ID'
+            onChange={this.updatePlot}
+            selectedIndex={this.state.selectedIndex}
           >
             {
               ids.map((id) => {
