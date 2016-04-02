@@ -2,23 +2,27 @@ import React, { PropTypes } from 'react';
 import PlotDemo from 'components/plots/PlotDemo';
 import { connect } from 'react-redux';
 // import Position3D from 'components/plots/Position3D';
-// import _ from 'lodash';
+import _ from 'lodash';
 
 export class PlotView extends React.Component {
 
   static propTypes = {
     params: PropTypes.object,
-    data: PropTypes.array
+    data: PropTypes.object
   }
 
   render () {
     const { params, data } = this.props;
-    console.debug(data);
-    console.debug(params.plotType);
 
-    // const filteredData = _.chain(data).filter(function (row) {
-    //   return row.id === params.id;
-    // }).value();
+    const filteredData = _.chain(data.toArray()).filter(function (row) {
+      return row.contains(2008, 'id');
+    }).value();
+
+    // Why doesn't this work?
+    // const filteredData = _.filter(data.toArray(), function (row) {
+    //   return _.matchesProperty('id', 2008);
+    // });
+    console.debug(filteredData);
 
     switch (params.plotType) {
       case 'plot-demo':
