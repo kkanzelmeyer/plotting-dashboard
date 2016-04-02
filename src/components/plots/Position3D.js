@@ -1,35 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import Plotly from 'react-plotlyjs';
-import _ from 'lodash';
 
 class Position3D extends Component {
 
   // data should be an array of track and truth data
   // filtered by a track id
   static propTypes = {
-    data: PropTypes.object,
-    id: PropTypes.object
+    data: PropTypes.object
   }
 
   createPlotData () {
     const { data } = this.props;
 
     // filter to get truth data only
-    const truthData = _.chain(data).filter(function (row) {
-      return row.type === 'truth';
-    }).value();
+    const truthData = data.filter((row) => row.get('type') === 'truth');
 
     // filter to get track data only
-    const trackData = _.chain(data).filter(function (row) {
-      return row.type === 'track';
-    }).value();
+    const trackData = data.filter((row) => row.get('type') === 'track');
 
     return [
       {
-        type: 'scatter',
-        x: _.chain(truthData).map('sv_ecef_x').value(),
-        y: _.chain(truthData).map('sv_ecef_y').value(),
-        z: _.chain(truthData).map('sv_ecef_z').value(),
+        type: 'scatter3d',
+        x: truthData.map((row) => row.get('sv_ecef_x')).toArray(),
+        y: truthData.map((row) => row.get('sv_ecef_y')).toArray(),
+        z: truthData.map((row) => row.get('sv_ecef_z')).toArray(),
         mode: 'markers',
         marker: {
           size: 6,
@@ -39,10 +33,10 @@ class Position3D extends Component {
         name: 'Truth'
       },
       {
-        type: 'scatter',
-        x: _.chain(trackData).map('sv_ecef_x').value(),
-        y: _.chain(trackData).map('sv_ecef_y').value(),
-        z: _.chain(trackData).map('sv_ecef_z').value(),
+        type: 'scatter3d',
+        x: trackData.map((row) => row.get('sv_ecef_x')).toArray(),
+        y: trackData.map((row) => row.get('sv_ecef_y')).toArray(),
+        z: trackData.map((row) => row.get('sv_ecef_z')).toArray(),
         mode: 'markers',
         marker: {
           size: 6,
@@ -55,9 +49,8 @@ class Position3D extends Component {
   }
 
   createLayout () {
-    const { id } = this.props;
     return {
-      title: `Position ECEF - Track ${id}`
+      title: 'Position ECEF'
     };
   }
 
