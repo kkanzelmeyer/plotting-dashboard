@@ -1,44 +1,45 @@
 import React, { Component, PropTypes } from 'react';
 import Plotly from 'react-plotlyjs';
 
-class Position3D extends Component {
+class Position2D extends Component {
 
   // data should be an array of track and truth data
   // filtered by a track id
   static propTypes = {
     data: PropTypes.object,
-    title: PropTypes.string
+    title: PropTypes.string,
+    field: PropTypes.string
   }
 
   createPlotData () {
-    const { data } = this.props;
+    const { data, field } = this.props;
+    // console.debug(data);
 
-    let truthX = [];
-    let truthY = [];
-    let truthZ = [];
-    let trackX = [];
-    let trackY = [];
-    let trackZ = [];
+    // filter to get truth data only
+    const truthData = data.filter((row) => row.get('type') === 'truth');
+    let x = [];
+    let y = [];
 
-    data.forEach((row) => {
-      if (row.get('type') === 'truth') {
-        truthX.push(row.get('sv_ecef_x'));
-        truthY.push(row.get('sv_ecef_y'));
-        truthZ.push(row.get('sv_ecef_z'));
-      }
-      if (row.get('type') === 'track') {
-        trackX.push(row.get('sv_ecef_x'));
-        trackY.push(row.get('sv_ecef_y'));
-        trackZ.push(row.get('sv_ecef_z'));
-      }
+    truthData.map((row) => {
+      x.push(row.get('t_valid'));
+      y.push(row.get(field));
+    });
+
+    // filter to get track data only
+    const trackData = data.filter((row) => row.get('type') === 'track');
+    let x2 = [];
+    let y2 = [];
+
+    trackData.map((row) => {
+      x2.push(row.get('t_valid'));
+      y2.push(row.get(field));
     });
 
     return [
       {
-        type: 'scatter3d',
-        x: truthX,
-        y: truthY,
-        z: truthZ,
+        type: 'scatter',
+        x: x,
+        y: y,
         mode: 'markers',
         marker: {
           size: 6,
@@ -48,13 +49,12 @@ class Position3D extends Component {
         name: 'Truth'
       },
       {
-        type: 'scatter3d',
-        x: trackX,
-        y: trackY,
-        z: trackZ,
+        type: 'scatter',
+        x: x2,
+        y: y2,
         mode: 'markers',
         marker: {
-          size: 6,
+          size: 8,
           opacity: 0.6,
           symbol: 'dot'
         },
@@ -80,10 +80,9 @@ class Position3D extends Component {
         data={this.createPlotData()}
         layout={this.createLayout()}
         config={this.config}
-        style={{display: 'flex'}}
       />
     );
   }
 }
 
-export default Position3D;
+export default Position2D;
