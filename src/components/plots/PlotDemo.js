@@ -20,6 +20,7 @@ class PlotDemo extends Component {
     }
   ];
   layout = {
+    autosize: false,
     title: 'simple example',
     xaxis: {
       title: 'time'
@@ -36,7 +37,7 @@ class PlotDemo extends Component {
   };
   config = {
     showLink: false,
-    displayModeBar: true
+    displayModeBar: false
   };
 
   render () {
@@ -45,6 +46,9 @@ class PlotDemo extends Component {
         data={this.data}
         layout={this.layout}
         config={this.config}
+        style={{
+          display: 'flex'
+        }}
       />
     );
   }

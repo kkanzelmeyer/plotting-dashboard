@@ -13,6 +13,7 @@ import CallView from 'views/CallView/CallView';
 import PartnerView from 'views/PartnerView/PartnerView';
 import PlotView from 'views/PlotView/PlotView';
 import SummaryView from 'views/SummaryView/SummaryView';
+import PlotDemo from 'components/plots/PlotDemo';
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
@@ -21,6 +22,7 @@ export default (store) => (
     <Route path='/calls' component={CallView} />
     <Route path='/404' component={NotFoundView} />
     <Route path='/plot/:plotType' component={PlotView} />
+    <Route path='/demo' component={PlotDemo} />
     <Route path='/summary' component={SummaryView} />
     <Redirect from='*' to='/404' />
   </Route>

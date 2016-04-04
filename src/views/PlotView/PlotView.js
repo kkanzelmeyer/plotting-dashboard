@@ -29,10 +29,12 @@ export class PlotView extends React.Component {
     this.styles = {
       list: {
         display: 'flex',
+        flex: '1 0 0',
         flexDirection: 'column'
       },
       plot: {
         display: 'flex',
+        flex: '9 0 0',
         flexDirection: 'column',
         height: 'calc(100vh - 88px)'
       }
