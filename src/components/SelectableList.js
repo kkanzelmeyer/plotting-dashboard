@@ -13,8 +13,7 @@ function wrapState (ComposedComponent) {
     }
     static propTypes = {
       onChange: PropTypes.func.isRequired,
-      selectedIndex: PropTypes.number,
-      selectedField: PropTypes.string
+      selectedIndex: PropTypes.number
     }
 
     handleUpdateSelectedIndex (e, index) {
@@ -33,7 +32,6 @@ function wrapState (ComposedComponent) {
       );
     }
   }
-
   return StateWrapper;
 }
 SelectableList = wrapState(SelectableList);

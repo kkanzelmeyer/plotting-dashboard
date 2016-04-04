@@ -4,33 +4,31 @@ import SelectableList from 'components/SelectableList';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
-import PlotDemo from 'components/plots/PlotDemo';
-import Position3D from 'components/plots/Position3D';
-import Position2D from 'components/plots/Position2D';
+import TwoAxis from 'components/plots/TwoAxis';
+import Pos3D from 'components/plots/Pos3D';
 
 export class PlotView extends React.Component {
-  constructor () {
+  constructor (props) {
     super();
-    this.state = {
-      selectedIndex: 2008,
-      selectedField: 'sv_ecef_x'
-    };
-    this.updatePlot = this.updatePlot.bind(this);
-    this.updatePlotField = this.updatePlotField.bind(this);
-    this.state.showFields = true;
-    this.state.showTrackList = true;
+    const { data } = props;
+    // get list of ids
+    this.ids = data.map((row) => row.get('id')).toSet().sort();
 
-    this.positionFields = [
-      'sv_ecef_x',
-      'sv_ecef_y',
-      'sv_ecef_z'
-    ];
+    this.state = {
+      selectedIndex: this.ids.first(),
+      selectedField: 0,
+      showFields: true,
+      showTrackList: true
+    };
+    this.updateTrack = this.updateTrack.bind(this);
+    this.updateField = this.updateField.bind(this);
 
     this.styles = {
       list: {
         display: 'flex',
         flex: '1 0 0',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        height: 'calc(100vh - 88px)'
       },
       plot: {
         display: 'flex',
@@ -46,52 +44,96 @@ export class PlotView extends React.Component {
     data: PropTypes.object
   }
 
-  updatePlot (selectedIndex) {
-    console.debug(`Selected Id: ${selectedIndex}`);
+  /**
+   * Called when a track is selected from the track list. This method
+   * updates the state object with the selected track index
+   * @param  {[number]} selectedIndex the selected track id index
+   */
+  updateTrack (selectedIndex) {
     this.setState({
       selectedIndex
     });
   }
 
-  updatePlotField (selectedField) {
-    console.debug(`Selected Field: ${selectedField}`);
+  /**
+   * Called when a field is selected from the field list. This method
+   * updates the state object with the selected field
+   * @param  {[number]} selectedField the selected field index
+   */
+  updateField (selectedField) {
     this.setState({
       selectedField
     });
   }
 
+  /**
+   * This method renders the object for React to display
+   * @return {[jsx]} the element for React to render
+   */
   render () {
     const { params, data } = this.props;
     const { selectedIndex, selectedField } = this.state;
-    // get list of ids
-    const ids = data.map((row) => row.get('id')).toSet();
 
     // get all data for an id
     const filteredData = data.filter((row) => row.get('id') === selectedIndex);
 
+    // control which plot to display
     switch (params.plotType) {
-      case 'plot-demo':
-        this.state.showFields = false;
-        this.state.showTrackList = false;
-        this.plot = <PlotDemo />;
+      case 'time-series':
+        this.state.showFields = true;
+        this.state.showTrackList = true;
+        this.fieldList = [
+          {
+            name: 'ECEF X',
+            field: 'sv_ecef_x'
+          },
+          {
+            name: 'ECEF Y',
+            field: 'sv_ecef_y'
+          },
+          {
+            name: 'ECEF Z',
+            field: 'sv_ecef_z'
+          }
+        ];
+        this.plot = <TwoAxis
+          data={filteredData}
+          fieldX='t_valid'
+          fieldY={this.fieldList[selectedField].field}
+          />;
+
+        break;
+
+      case 'range-metrics':
+        this.state.showFields = true;
+        this.state.showTrackList = true;
+        this.fieldList = [
+          {
+            name: 'PD',
+            field: 'pd'
+          },
+          {
+            name: 'Track Quality Velocity',
+            field: 'tq_vel'
+          },
+          {
+            name: 'Track Quality Position',
+            field: 'tq_pos'
+          }
+        ];
+        this.plot = <TwoAxis
+          data={filteredData}
+          fieldX='range'
+          fieldY={this.fieldList[selectedField].field}
+          />;
         break;
 
       case 'position-3d':
         this.state.showFields = false;
         this.state.showTrackList = true;
-        this.plot = <Position3D
+        this.plot = <Pos3D
           data={filteredData}
           title={`Position ECEF - Track ${selectedIndex}`}
-          />;
-        break;
-
-      case 'position-2d':
-        this.state.showFields = true;
-        this.state.showTrackList = true;
-        this.plot = <Position2D
-          data={filteredData}
-          title={`Position ECEF - Track ${selectedIndex}`}
-          field={selectedField}
           />;
         break;
 
@@ -102,7 +144,8 @@ export class PlotView extends React.Component {
     return (
       <div style={{
         display: 'flex',
-        flex: '1 1 auto'
+        flex: '1 1 auto',
+        backgroundColor: '#fff'
       }}
       >
         <div>
@@ -110,11 +153,11 @@ export class PlotView extends React.Component {
             ? <SelectableList
               style={this.styles.list}
               subheader='Track ID'
-              onChange={this.updatePlot}
+              onChange={this.updateTrack}
               selectedIndex={this.state.selectedIndex}
               >
                 {
-                  ids.map((id) => {
+                  this.ids.map((id) => {
                     return (
                       <ListItem
                         value={id}
@@ -135,12 +178,11 @@ export class PlotView extends React.Component {
           ? <SelectableList
             style={this.styles.list}
             subheader='Field'
-            onChange={this.updatePlotField}
-            selectedField={this.state.selectedField}
+            onChange={this.updateField}
+            selectedIndex={this.state.selectedField}
           >{
-            this.positionFields.map((field) => {
-              const prettyPrint = field.replace(/[_]/g, ' ').toUpperCase();
-              return <ListItem value={field} key={field}>{prettyPrint}</ListItem>;
+            this.fieldList.map((field, i) => {
+              return <ListItem value={i} key={field.field}>{field.name}</ListItem>;
             })
             }
           </SelectableList>
