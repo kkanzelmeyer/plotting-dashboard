@@ -89,7 +89,6 @@ export default class AppLeftNav extends React.Component {
           <ListItem primaryText='Plot Demo' value='/plot/plot-demo' />
           <ListItem primaryText='Position 3D' value='/plot/position-3d' />
           <ListItem primaryText='Position 2D' value='/plot/position-2d' />
-          <ListItem primaryText='demo' value='/demo' />
         </SelectableList>
       </LeftNav>
     );

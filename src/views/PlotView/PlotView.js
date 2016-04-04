@@ -40,6 +40,7 @@ export class PlotView extends React.Component {
       }
     };
   }
+
   static propTypes = {
     params: PropTypes.object,
     data: PropTypes.object
@@ -100,7 +101,8 @@ export class PlotView extends React.Component {
 
     return (
       <div style={{
-        display: 'flex'
+        display: 'flex',
+        flex: '1 1 auto'
       }}
       >
         <div>
@@ -134,7 +136,7 @@ export class PlotView extends React.Component {
             style={this.styles.list}
             subheader='Field'
             onChange={this.updatePlotField}
-            selectedIndex={this.state.selectedField}
+            selectedField={this.state.selectedField}
           >{
             this.positionFields.map((field) => {
               const prettyPrint = field.replace(/[_]/g, ' ').toUpperCase();

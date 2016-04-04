@@ -42,13 +42,11 @@ class PlotDemo extends Component {
 
   render () {
     return (
-      <Plotly className='plot-demo'
+      <Plotly
+        className='plot-demo'
         data={this.data}
         layout={this.layout}
         config={this.config}
-        style={{
-          display: 'flex'
-        }}
       />
     );
   }

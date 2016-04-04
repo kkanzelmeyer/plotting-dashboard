@@ -80,7 +80,10 @@ class Position3D extends Component {
         data={this.createPlotData()}
         layout={this.createLayout()}
         config={this.config}
-        style={{display: 'flex'}}
+        style={{
+          display: 'flex',
+          flex: '0 0 100%'
+        }}
       />
     );
   }
