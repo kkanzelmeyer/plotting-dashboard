@@ -7,7 +7,9 @@ class TwoAxis extends Component {
     data: PropTypes.object,
     title: PropTypes.string,
     fieldX: PropTypes.string,
-    fieldY: PropTypes.string
+    fieldY: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number
   }
 
   getChartData () {
@@ -53,10 +55,9 @@ class TwoAxis extends Component {
   }
 
   render () {
-    const height = 700;
-    const width = 1100;
+    const { height, width } = this.props;
     const margins = {
-      top: 70,
+      top: 20,
       bottom: 50,
       left: 50,
       right: 10
@@ -64,7 +65,7 @@ class TwoAxis extends Component {
 
     return (
       <div style={{
-        padding: '30'
+        padding: '20'
       }}
       >
         <ScatterPlot

@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SelectableList from 'components/SelectableList';
+import Dimensions from 'react-dimensions';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
 import TwoAxis from 'components/plots/TwoAxis';
-import Pos3D from 'components/plots/Pos3D';
+import Plotly3D from 'components/plots/Plotly3D';
 
 export class PlotView extends React.Component {
   constructor (props) {
@@ -39,9 +40,15 @@ export class PlotView extends React.Component {
     };
   }
 
+  componentDidMount () {
+    window.dispatchEvent(new Event('resize'));
+  }
+
   static propTypes = {
     params: PropTypes.object,
-    data: PropTypes.object
+    data: PropTypes.object,
+    containerHeight: PropTypes.number,
+    containerWidth: PropTypes.number
   }
 
   /**
@@ -71,7 +78,7 @@ export class PlotView extends React.Component {
    * @return {[jsx]} the element for React to render
    */
   render () {
-    const { params, data } = this.props;
+    const { params, data, containerWidth, containerHeight } = this.props;
     const { selectedIndex, selectedField } = this.state;
 
     // get all data for an id
@@ -100,6 +107,8 @@ export class PlotView extends React.Component {
           data={filteredData}
           fieldX='t_valid'
           fieldY={this.fieldList[selectedField].field}
+          width={containerWidth-200}
+          height={containerHeight}
           />;
 
         break;
@@ -125,13 +134,15 @@ export class PlotView extends React.Component {
           data={filteredData}
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
+          width={containerWidth-200}
+          height={containerHeight}
           />;
         break;
 
       case 'position-3d':
         this.state.showFields = false;
         this.state.showTrackList = true;
-        this.plot = <Pos3D
+        this.plot = <Plotly3D
           data={filteredData}
           title={`Position ECEF - Track ${selectedIndex}`}
           />;
@@ -197,4 +208,4 @@ const mapStateToProps = (state) => ({
   data: state.data
 });
 
-export default connect(mapStateToProps)(PlotView);
+export default connect(mapStateToProps)(Dimensions()(PlotView));

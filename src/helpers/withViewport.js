@@ -23,7 +23,7 @@ export default function withViewport (ComposedComponent) {
           height
         }
       };
-      this.handleResize = debounce(this.handleResize.bind(this), 200);
+      this.handleResize = debounce(this.handleResize.bind(this), 50);
     }
 
     componentDidMount () {
