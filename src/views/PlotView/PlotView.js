@@ -108,7 +108,7 @@ export class PlotView extends React.Component {
           fieldX='t_valid'
           fieldY={this.fieldList[selectedField].field}
           width={containerWidth-200}
-          height={containerHeight}
+          height={containerHeight-100}
           />;
 
         break;
@@ -135,7 +135,7 @@ export class PlotView extends React.Component {
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
           width={containerWidth-200}
-          height={containerHeight}
+          height={containerHeight-100}
           />;
         break;
 
@@ -145,6 +145,8 @@ export class PlotView extends React.Component {
         this.plot = <Plotly3D
           data={filteredData}
           title={`Position ECEF - Track ${selectedIndex}`}
+          width={containerWidth-200}
+          height={containerHeight-100}
           />;
         break;
 

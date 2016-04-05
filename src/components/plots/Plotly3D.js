@@ -8,7 +8,9 @@ class Plotly3D extends React.Component {
   // filtered by a track id
   static propTypes = {
     data: PropTypes.object,
-    title: PropTypes.string
+    title: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number
   }
 
   constructor () {
@@ -27,8 +29,7 @@ class Plotly3D extends React.Component {
   componentWillReceiveProps (nextProps) {
     const { plotDiv } = this.state;
     if (plotDiv) {
-      plotDiv.data = this.createPlotData(nextProps.data);
-      Plotly.redraw(plotDiv);
+      Plotly.newPlot(plotDiv, this.createPlotData(nextProps.data), this.createLayout());
     }
   }
 
@@ -85,7 +86,9 @@ class Plotly3D extends React.Component {
 
   createLayout () {
     return {
-      title: this.props.title
+      title: this.props.title,
+      width: this.props.width,
+      height: this.props.height
     };
   }
 
