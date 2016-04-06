@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import LeftNav from 'material-ui/lib/left-nav';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
@@ -12,7 +13,14 @@ import {
 
 const SelectableList = SelectableContainerEnhance(List);
 
-export default class AppLeftNav extends React.Component {
+class AppLeftNav extends React.Component {
+
+  constructor (props) {
+    super();
+    this.state = {
+      dataLoaded: true
+    };
+  }
 
   static propTypes = {
     docked: React.PropTypes.bool.isRequired,
@@ -70,6 +78,7 @@ export default class AppLeftNav extends React.Component {
     } = this.context.muiTheme;
 
     const styles = this.styles;
+    const { dataLoaded } = this.state;
 
     return (
       <LeftNav
@@ -86,11 +95,17 @@ export default class AppLeftNav extends React.Component {
           valueLink={{ value: location.pathname, requestChange: onRequestChangeList }}
         >
           <ListItem primaryText='Summary' value='/' />
-          <ListItem primaryText='Position' value='/plot/time-series' />
-          <ListItem primaryText='Position 3D' value='/plot/position-3d' />
-          <ListItem primaryText='Range Metrics' value='/plot/range-metrics' />
+          <ListItem primaryText='Position' value='/plot/time-series' disabled={!dataLoaded} />
+          <ListItem primaryText='Position 3D' value='/plot/position-3d' disabled={!dataLoaded} />
+          <ListItem primaryText='Range Metrics' value='/plot/range-metrics' disabled={!dataLoaded} />
         </SelectableList>
       </LeftNav>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  data: state.data
+});
+
+export default connect(mapStateToProps)(AppLeftNav);

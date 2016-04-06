@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import SummaryWidget from 'components/SummaryWidget';
+import getMetrics from './SummaryMetrics';
 
 export class SummaryView extends React.Component {
+
+  static propTypes = {
+    data: PropTypes.object
+  }
+
   render () {
+    const { data } = this.props;
+    const metrics = getMetrics(data);
     return (
       <div>
+        <SummaryWidget
+          title='Total Threats'
+          metric={metrics.totalThreats}
+        />
         <h4>Under Construction</h4>
       </div>
     );

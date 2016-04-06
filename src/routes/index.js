@@ -9,16 +9,12 @@ import { Route, IndexRoute, Redirect } from 'react-router';
 import CoreLayout from 'layouts/CoreLayout/CoreLayout';
 import HomeView from 'views/HomeView/HomeView';
 import NotFoundView from 'views/NotFoundView/NotFoundView';
-import CallView from 'views/CallView/CallView';
-import PartnerView from 'views/PartnerView/PartnerView';
 import PlotView from 'views/PlotView/PlotView';
 import SummaryView from 'views/SummaryView/SummaryView';
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
-    <Route path='/partners' component={PartnerView} />
-    <Route path='/calls' component={CallView} />
     <Route path='/404' component={NotFoundView} />
     <Route path='/plot/:plotType' component={PlotView} />
     <Route path='/summary' component={SummaryView} />

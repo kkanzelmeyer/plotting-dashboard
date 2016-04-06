@@ -26,9 +26,6 @@ export class HomeView extends React.Component {
     // file reader to parse input file
     const fr = new FileReader();
     fr.addEventListener('load', function (e) {
-      console.debug('Finished loading file');
-      // TODO try stripping last few characters by brute force
-      // or using a ramda utility to do it. Time the results
       const logData = `[${e.target.result.replace(/[,]\s+$/g, '')}]`;
       addData(JSON.parse(logData));
     });
