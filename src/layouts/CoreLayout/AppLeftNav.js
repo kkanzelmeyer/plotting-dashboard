@@ -15,13 +15,6 @@ const SelectableList = SelectableContainerEnhance(List);
 
 class AppLeftNav extends React.Component {
 
-  constructor (props) {
-    super();
-    this.state = {
-      dataLoaded: true
-    };
-  }
-
   static propTypes = {
     docked: React.PropTypes.bool.isRequired,
     history: React.PropTypes.object.isRequired,
@@ -29,7 +22,8 @@ class AppLeftNav extends React.Component {
     onRequestChangeLeftNav: React.PropTypes.func.isRequired,
     onRequestChangeList: React.PropTypes.func.isRequired,
     open: React.PropTypes.bool.isRequired,
-    style: React.PropTypes.object
+    style: React.PropTypes.object,
+    data: React.PropTypes.object
   };
 
   static contextTypes = {
@@ -70,15 +64,29 @@ class AppLeftNav extends React.Component {
       onRequestChangeLeftNav,
       onRequestChangeList,
       open,
-      style
+      style,
+      data
     } = this.props;
+
+    let disableMenu = (data.size === 0);
+    console.debug('Menu disabled?' + disableMenu);
 
     const {
       prepareStyles
     } = this.context.muiTheme;
 
     const styles = this.styles;
-    const { dataLoaded } = this.state;
+
+    const menuStyle = {
+      color: disableMenu ? '#ddd' : '#000'
+    };
+
+    const menuItems = [
+      { primaryText: 'Summary', value: '/summary' },
+      { primaryText: 'Time Series', value: '/plot/time-series' },
+      { primaryText: 'Position 3D', value: '/plot/position-3d' },
+      { primaryText: 'Range Metrics', value: '/plot/range-metrics' }
+    ];
 
     return (
       <LeftNav
@@ -94,18 +102,26 @@ class AppLeftNav extends React.Component {
         <SelectableList
           valueLink={{ value: location.pathname, requestChange: onRequestChangeList }}
         >
-          <ListItem primaryText='Summary' value='/' />
-          <ListItem primaryText='Position' value='/plot/time-series' disabled={!dataLoaded} />
-          <ListItem primaryText='Position 3D' value='/plot/position-3d' disabled={!dataLoaded} />
-          <ListItem primaryText='Range Metrics' value='/plot/range-metrics' disabled={!dataLoaded} />
+          {
+            menuItems.map((item, i) => {
+              return <ListItem
+                primaryText={item.primaryText}
+                value={item.value}
+                key={i}
+                disabled={disableMenu}
+                style={menuStyle}/>;
+            })
+          }
         </SelectableList>
       </LeftNav>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  data: state.data
-});
+const mapDispatchToProps = (state) => {
+  return {
+    data: state.data
+  };
+};
 
-export default connect(mapStateToProps)(AppLeftNav);
+export default connect(mapDispatchToProps)(AppLeftNav);

@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import SummaryWidget from 'components/SummaryWidget';
 import getMetrics from './SummaryMetrics';
 
-export class SummaryView extends React.Component {
+export class SummaryView extends Component {
 
   static propTypes = {
     data: PropTypes.object

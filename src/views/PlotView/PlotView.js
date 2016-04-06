@@ -79,6 +79,7 @@ export class PlotView extends React.Component {
    */
   render () {
     const { params, data, containerWidth, containerHeight } = this.props;
+    const height = containerHeight - 100;
     const { selectedIndex, selectedField } = this.state;
 
     // get all data for an id
@@ -107,8 +108,8 @@ export class PlotView extends React.Component {
           data={filteredData}
           fieldX='t_valid'
           fieldY={this.fieldList[selectedField].field}
-          width={containerWidth-200}
-          height={containerHeight-100}
+          width={containerWidth - 200}
+          height={height}
           />;
 
         break;
@@ -135,7 +136,7 @@ export class PlotView extends React.Component {
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
           width={containerWidth-200}
-          height={containerHeight-100}
+          height={height}
           />;
         break;
 
@@ -146,7 +147,7 @@ export class PlotView extends React.Component {
           data={filteredData}
           title={`Position ECEF - Track ${selectedIndex}`}
           width={containerWidth-200}
-          height={containerHeight-100}
+          height={height}
           />;
         break;
 
