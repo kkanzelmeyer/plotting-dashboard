@@ -5,15 +5,21 @@ import Dimensions from 'react-dimensions';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
-import TwoAxis from 'components/plots/TwoAxis';
-import Plotly3D from 'components/plots/Plotly3D';
+import Position from 'components/plots/Position';
+import BeamPosition from 'components/plots/BeamPosition';
+import RangeMetrics from 'components/plots/RangeMetrics';
+import Position3D from 'components/plots/Position3D';
 
 export class PlotView extends React.Component {
   constructor (props) {
     super();
     const { data } = props;
     // get list of ids
-    this.ids = data.map((row) => row.get('id')).toSet().sort();
+    this.ids = data.map((row) => {
+      if (row.has('id')) {
+        return row.get('id');
+      }
+    }).toSet().sort().slice(1);
 
     this.state = {
       selectedIndex: this.ids.first(),
@@ -79,36 +85,33 @@ export class PlotView extends React.Component {
    */
   render () {
     const { params, data, containerWidth, containerHeight } = this.props;
-    const height = containerHeight - 100;
+    const height = containerHeight;
+    const width = containerWidth-150;
     const { selectedIndex, selectedField } = this.state;
 
-    // get all data for an id
-    const filteredData = data.filter((row) => row.get('id') === selectedIndex);
+    // get beam position data
+    const beamPositionData = data.filter((row) => {
+      return row.get('type') === 'beamPosition';
+    });
+    // get track data
+    const trackData = data.filter((row) => row.get('id') === selectedIndex);
 
     // control which plot to display
     switch (params.plotType) {
-      case 'time-series':
+      case 'position':
         this.state.showFields = true;
         this.state.showTrackList = true;
         this.fieldList = [
-          {
-            name: 'ECEF X',
-            field: 'sv_ecef_x'
-          },
-          {
-            name: 'ECEF Y',
-            field: 'sv_ecef_y'
-          },
-          {
-            name: 'ECEF Z',
-            field: 'sv_ecef_z'
-          }
+          { name: 'ECEF X', field: 'sv_ecef_x' },
+          { name: 'ECEF Y', field: 'sv_ecef_y' },
+          { name: 'ECEF Z', field: 'sv_ecef_z' }
         ];
-        this.plot = <TwoAxis
-          data={filteredData}
+        this.plot = <Position
+          data={trackData}
+          title={`${this.fieldList[selectedField].name} vs Time`}
           fieldX='t_valid'
           fieldY={this.fieldList[selectedField].field}
-          width={containerWidth - 200}
+          width={width}
           height={height}
           />;
 
@@ -118,24 +121,16 @@ export class PlotView extends React.Component {
         this.state.showFields = true;
         this.state.showTrackList = true;
         this.fieldList = [
-          {
-            name: 'PD',
-            field: 'pd'
-          },
-          {
-            name: 'Track Quality Velocity',
-            field: 'tq_vel'
-          },
-          {
-            name: 'Track Quality Position',
-            field: 'tq_pos'
-          }
+          { name: 'PD', field: 'pd' },
+          { name: 'Track Quality Velocity', field: 'tq_vel' },
+          { name: 'Track Quality Position', field: 'tq_pos' }
         ];
-        this.plot = <TwoAxis
-          data={filteredData}
+        this.plot = <RangeMetrics
+          data={trackData}
+          title={`${this.fieldList[selectedField].name} vs Range`}
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
-          width={containerWidth-200}
+          width={width}
           height={height}
           />;
         break;
@@ -143,10 +138,21 @@ export class PlotView extends React.Component {
       case 'position-3d':
         this.state.showFields = false;
         this.state.showTrackList = true;
-        this.plot = <Plotly3D
-          data={filteredData}
+        this.plot = <Position3D
+          data={trackData}
           title={`Position ECEF - Track ${selectedIndex}`}
-          width={containerWidth-200}
+          width={width}
+          height={height}
+          />;
+        break;
+
+      case 'beam-position':
+        this.state.showFields = false;
+        this.state.showTrackList = false;
+        this.plot = <BeamPosition
+          data={beamPositionData}
+          title={'Beam Position'}
+          width={width}
           height={height}
           />;
         break;

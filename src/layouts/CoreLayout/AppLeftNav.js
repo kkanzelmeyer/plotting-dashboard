@@ -69,7 +69,6 @@ class AppLeftNav extends React.Component {
     } = this.props;
 
     let disableMenu = (data.size === 0);
-    console.debug('Menu disabled?' + disableMenu);
 
     const {
       prepareStyles
@@ -83,9 +82,10 @@ class AppLeftNav extends React.Component {
 
     const menuItems = [
       { primaryText: 'Summary', value: '/summary' },
-      { primaryText: 'Time Series', value: '/plot/time-series' },
+      { primaryText: 'Position', value: '/plot/position' },
       { primaryText: 'Position 3D', value: '/plot/position-3d' },
-      { primaryText: 'Range Metrics', value: '/plot/range-metrics' }
+      { primaryText: 'Range Metrics', value: '/plot/range-metrics' },
+      { primaryText: 'Beam Position', value: '/plot/beam-position' }
     ];
 
     return (

@@ -15,19 +15,26 @@ export class HomeView extends React.Component {
   static propTypes = {
     addData: PropTypes.func
   }
+
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
   /**
    * Receives the dropped file(s) from the drop zone.
    * @param  {[file]} files The file uploaded by the user
    */
   onDrop (files) {
-    console.debug('Received files: ', files);
     const { addData } = this.props;
+    const { router } = this.context;
 
     // file reader to parse input file
     const fr = new FileReader();
     fr.addEventListener('load', function (e) {
       const logData = `[${e.target.result.replace(/[,]\s+$/g, '')}]`;
       addData(JSON.parse(logData));
+      if (router) {
+        router.push('/summary');
+      }
     });
     fr.readAsText(files[0]);
   }

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
 
-class Plotly3D extends React.Component {
+class Position extends React.Component {
 
   // data should be an array of track and truth data
   // filtered by a track id
@@ -10,6 +10,8 @@ class Plotly3D extends React.Component {
     data: PropTypes.object,
     title: PropTypes.string,
     width: PropTypes.number,
+    fieldX: PropTypes.string,
+    fieldY: PropTypes.string,
     height: PropTypes.number
   }
 
@@ -34,54 +36,47 @@ class Plotly3D extends React.Component {
   }
 
   createPlotData (data) {
+    const { fieldX, fieldY } = this.props;
     let truthX = [];
     let truthY = [];
-    let truthZ = [];
     let trackX = [];
     let trackY = [];
-    let trackZ = [];
 
     data.forEach((row) => {
       if (row.get('type') === 'truth') {
-        truthX.push(row.get('sv_ecef_x'));
-        truthY.push(row.get('sv_ecef_y'));
-        truthZ.push(row.get('sv_ecef_z'));
+        truthX.push(row.get(fieldX));
+        truthY.push(row.get(fieldY));
       }
       if (row.get('type') === 'track') {
-        trackX.push(row.get('sv_ecef_x'));
-        trackY.push(row.get('sv_ecef_y'));
-        trackZ.push(row.get('sv_ecef_z'));
+        trackX.push(row.get(fieldX));
+        trackY.push(row.get(fieldY));
       }
     });
 
-    return [
-      {
-        type: 'scatter3d',
-        x: truthX,
-        y: truthY,
-        z: truthZ,
-        mode: 'markers',
-        marker: {
-          size: 8,
-          opacity: 0.6,
-          symbol: 'diamond'
-        },
-        name: 'Truth'
+    return [{
+      type: 'scatter',
+      x: truthX,
+      y: truthY,
+      mode: 'markers',
+      marker: {
+        size: 18,
+        opacity: 0.6,
+        symbol: 'dot'
       },
-      {
-        type: 'scatter3d',
-        x: trackX,
-        y: trackY,
-        z: trackZ,
-        mode: 'markers',
-        marker: {
-          size: 6,
-          opacity: 0.6,
-          symbol: 'dot'
-        },
-        name: 'Track'
-      }
-    ];
+      name: 'Truth'
+    },
+    {
+      type: 'scatter',
+      x: trackX,
+      y: trackY,
+      mode: 'markers',
+      marker: {
+        size: 10,
+        opacity: 0.6,
+        symbol: 'diamond'
+      },
+      name: 'Track'
+    }];
   }
 
   createLayout () {
@@ -97,10 +92,6 @@ class Plotly3D extends React.Component {
     displayModeBar: true
   };
 
-  makePlot () {
-
-  }
-
   render () {
     return (
       <div />
@@ -108,4 +99,4 @@ class Plotly3D extends React.Component {
   }
 }
 
-export default Plotly3D;
+export default Position;
