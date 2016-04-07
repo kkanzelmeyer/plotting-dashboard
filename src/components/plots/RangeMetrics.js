@@ -33,7 +33,6 @@ class RangeMetrics extends React.Component {
     console.debug(plotDiv);
     if (plotDiv) {
       console.debug(nextProps);
-      Plotly.redraw(plotDiv);
       Plotly.newPlot(plotDiv, this.createPlotData(nextProps.data), this.createLayout());
     }
   }
@@ -67,9 +66,9 @@ class RangeMetrics extends React.Component {
   createLayout () {
     const { title, width, height, fieldY, fieldX } = this.props;
     return {
-      title: title,
-      width: width,
-      height: height,
+      title,
+      width,
+      height,
       yaxis: {
         title: fieldY
       },

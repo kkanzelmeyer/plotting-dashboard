@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SelectableList from 'components/SelectableList';
 import Dimensions from 'react-dimensions';
+// data utilities
+import { getIds } from 'helpers/dataTools';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
@@ -15,11 +17,7 @@ export class PlotView extends React.Component {
     super();
     const { data } = props;
     // get list of ids
-    this.ids = data.map((row) => {
-      if (row.has('id')) {
-        return row.get('id');
-      }
-    }).toSet().sort().slice(1);
+    this.ids = getIds(data);
 
     this.state = {
       selectedIndex: this.ids.first(),
@@ -108,7 +106,7 @@ export class PlotView extends React.Component {
         ];
         this.plot = <Position
           data={trackData}
-          title={`${this.fieldList[selectedField].name} vs Time`}
+          title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Time`}
           fieldX='t_valid'
           fieldY={this.fieldList[selectedField].field}
           width={width}
@@ -127,7 +125,7 @@ export class PlotView extends React.Component {
         ];
         this.plot = <RangeMetrics
           data={trackData}
-          title={`${this.fieldList[selectedField].name} vs Range`}
+          title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Range`}
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
           width={width}
@@ -152,8 +150,10 @@ export class PlotView extends React.Component {
         this.plot = <BeamPosition
           data={beamPositionData}
           title={'Beam Position'}
-          width={width}
+          width={width+100}
           height={height}
+          fieldX={'azDeg'}
+          fieldY={'elDeg'}
           />;
         break;
 

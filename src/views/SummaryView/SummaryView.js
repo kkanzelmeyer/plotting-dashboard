@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import SummaryWidget from 'components/SummaryWidget';
 import getMetrics from './SummaryMetrics';
 
@@ -11,16 +12,30 @@ export class SummaryView extends Component {
   render () {
     const { data } = this.props;
     const metrics = getMetrics(data);
+    const { totalThreats, airThreats } = metrics;
+    const threats = {
+      totalThreats: {'label': 'Total Threats', 'value': totalThreats},
+      airThreats: {'label': 'Air Threats', 'value': airThreats}
+    };
     return (
-      <div>
+      <div style={{
+        display: 'flex',
+        flex: '1'
+      }}>
         <SummaryWidget
-          title='Total Threats'
-          metric={metrics.totalThreats}
+          title='Scenario Threats'
+          data={threats}
+          style={{
+            display: 'flex'
+          }}
         />
-        <h4>Under Construction</h4>
       </div>
     );
   };
 }
 
-export default SummaryView;
+const mapStateToProps = (state) => ({
+  data: state.data
+});
+
+export default connect(mapStateToProps)(SummaryView);

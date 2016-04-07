@@ -80,10 +80,17 @@ class Position extends React.Component {
   }
 
   createLayout () {
+    const { title, width, height, fieldX, fieldY } = this.props;
     return {
-      title: this.props.title,
-      width: this.props.width,
-      height: this.props.height
+      title,
+      width,
+      height,
+      xaxis: {
+        title: fieldX
+      },
+      yaxis: {
+        title: fieldY
+      }
     };
   }
 

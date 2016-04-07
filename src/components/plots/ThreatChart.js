@@ -2,17 +2,13 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
 
-class BeamPosition extends React.Component {
+class ThreatChart extends React.Component {
 
   // data should be an array of track and truth data
   // filtered by a track id
   static propTypes = {
     data: PropTypes.object,
-    title: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    fieldX: PropTypes.string,
-    fieldY: PropTypes.string
+    title: PropTypes.string
   }
 
   constructor () {
@@ -25,7 +21,6 @@ class BeamPosition extends React.Component {
     this.setState({
       plotDiv
     });
-    console.debug(this.createPlotData(this.props.data));
     Plotly.newPlot(plotDiv, this.createPlotData(this.props.data), this.createLayout());
   }
 
@@ -37,40 +32,27 @@ class BeamPosition extends React.Component {
   }
 
   createPlotData (data) {
-    const { fieldX, fieldY } = this.props;
-    let beamX = [];
-    let beamY = [];
-
-    data.forEach((row) => {
-      beamX.push(row.get(fieldX));
-      beamY.push(row.get(fieldY));
-    });
-
     return [{
-      type: 'scatter',
-      x: beamX,
-      y: beamY,
-      mode: 'markers',
-      marker: {
-        size: 18,
-        opacity: 0.6,
-        symbol: 'dot'
-      },
-      name: 'Beam Position'
+      values: [data.airThreats.value],
+      labels: [data.airThreats.label],
+      hoverinfo: 'label+percent+name',
+      hole: 0.6,
+      type: 'pie',
+      name: 'All Threats'
     }];
   }
 
   createLayout () {
-    const { title, width, height, fieldX, fieldY } = this.props;
+    const { title } = this.props;
     return {
       title,
-      width,
-      height,
-      xaxis: {
-        title: fieldX
-      },
-      yaxis: {
-        title: fieldY
+      height: 400,
+      width: 400,
+      margin: {
+        t: 0,
+        b: 0,
+        l: 20,
+        r: 0
       }
     };
   }
@@ -87,4 +69,4 @@ class BeamPosition extends React.Component {
   }
 }
 
-export default BeamPosition;
+export default ThreatChart;
