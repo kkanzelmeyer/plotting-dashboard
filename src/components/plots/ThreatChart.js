@@ -13,7 +13,7 @@ class ThreatChart extends React.Component {
 
   constructor () {
     super();
-    this.state = {};
+    this.state={};
   }
 
   componentDidMount () {
@@ -32,6 +32,7 @@ class ThreatChart extends React.Component {
   }
 
   createPlotData (data) {
+    console.debug(data);
     return [{
       values: [data.airThreats.value],
       labels: [data.airThreats.label],

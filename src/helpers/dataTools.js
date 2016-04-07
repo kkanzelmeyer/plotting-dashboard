@@ -1,13 +1,8 @@
 
 export const getIds = (data) => {
-  return data.map((row) => {
-    if (row.has('id')) {
-      let val = row.get('id');
-      if (val) {
-        return val;
-      }
-    }
-  }).toSet().sort();
+  let ids = new Set();
+  data.map((row) => ids.add(row.get('id')));
+  return ids;
 };
 
 export const countAirThreats = (data) => {

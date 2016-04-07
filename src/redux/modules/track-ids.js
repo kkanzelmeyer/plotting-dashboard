@@ -6,16 +6,16 @@ import Action from '../action';
  * @type {Object}
  */
 export const type = {
-  SET_DATA: 'SET_DATA'
+  SET_IDS: 'SET_IDS'
 };
 
 /**
  * Action to add data to the state
  * @param  {[data]} data The data to add
  */
-export const addData = (data) => {
+export const addIds = (data) => {
   return new Action(
-    type.SET_DATA,
+    type.SET_IDS,
     data
   ).toObject();
 };

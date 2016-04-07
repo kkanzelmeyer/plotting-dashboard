@@ -1,3 +1,4 @@
+import { Set } from 'immutable';
 
 const getSummaryMetrics = (data) => {
   let ids = new Set();
@@ -5,16 +6,16 @@ const getSummaryMetrics = (data) => {
 
   data.forEach((row) => {
     if (row.has('id')) {
-      ids.add(row.get('id'));
+      ids = ids.add(row.get('id'));
     }
     if (row.get('objType') === 'AIRBREATHER') {
-      airThreats.add(row.get('id'));
+      airThreats = airThreats.add(row.get('id'));
     }
   });
 
   return ({
-    totalThreats: ids.size,
-    airThreats: airThreats.size,
+    trackIds: ids,
+    airThreats: airThreats,
     ramThreats: 0,
     radars: [
       {
