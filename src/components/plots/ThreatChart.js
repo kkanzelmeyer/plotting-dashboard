@@ -32,7 +32,6 @@ class ThreatChart extends React.Component {
   }
 
   createPlotData (data) {
-    console.debug(data);
     return [{
       values: [data.airThreats.value],
       labels: [data.airThreats.label],
@@ -47,14 +46,16 @@ class ThreatChart extends React.Component {
     const { title } = this.props;
     return {
       title,
-      height: 400,
-      width: 400,
+      height: 300,
+      width: 300,
       margin: {
         t: 0,
         b: 0,
         l: 20,
-        r: 0
-      }
+        r: 20
+      },
+      hoverinfo: 'label+value+name',
+      showlegend: false
     };
   }
 

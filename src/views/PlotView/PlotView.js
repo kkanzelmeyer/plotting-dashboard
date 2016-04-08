@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SelectableList from 'components/SelectableList';
 import Dimensions from 'react-dimensions';
-// data utilities
-import { getIds } from 'helpers/dataTools';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
@@ -15,12 +13,9 @@ import Position3D from 'components/plots/Position3D';
 export class PlotView extends React.Component {
   constructor (props) {
     super();
-    const { data } = props;
-    // get list of ids
-    this.ids = getIds(data);
 
     this.state = {
-      selectedIndex: this.ids.first(),
+      selectedIndex: props.trackIds.first(),
       selectedField: 0,
       showFields: true,
       showTrackList: true
@@ -51,6 +46,7 @@ export class PlotView extends React.Component {
   static propTypes = {
     params: PropTypes.object,
     data: PropTypes.object,
+    trackIds: PropTypes.object,
     containerHeight: PropTypes.number,
     containerWidth: PropTypes.number
   }
@@ -82,7 +78,7 @@ export class PlotView extends React.Component {
    * @return {[jsx]} the element for React to render
    */
   render () {
-    const { params, data, containerWidth, containerHeight } = this.props;
+    const { params, data, trackIds, containerWidth, containerHeight } = this.props;
     const height = containerHeight;
     const width = containerWidth-150;
     const { selectedIndex, selectedField } = this.state;
@@ -174,10 +170,10 @@ export class PlotView extends React.Component {
               style={this.styles.list}
               subheader='Track ID'
               onChange={this.updateTrack}
-              selectedIndex={this.state.selectedIndex}
+              selectedIndex={selectedIndex}
               >
                 {
-                  this.ids.map((id) => {
+                  trackIds.map((id) => {
                     return (
                       <ListItem
                         value={id}
@@ -199,7 +195,7 @@ export class PlotView extends React.Component {
             style={this.styles.list}
             subheader='Field'
             onChange={this.updateField}
-            selectedIndex={this.state.selectedField}
+            selectedIndex={selectedField}
           >{
             this.fieldList.map((field, i) => {
               return <ListItem value={i} key={field.field}>{field.name}</ListItem>;
@@ -214,7 +210,8 @@ export class PlotView extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.data
+  data: state.data,
+  trackIds: state.trackIds
 });
 
 export default connect(mapStateToProps)(Dimensions()(PlotView));

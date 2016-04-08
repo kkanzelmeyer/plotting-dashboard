@@ -25,7 +25,6 @@ class BeamPosition extends React.Component {
     this.setState({
       plotDiv
     });
-    console.debug(this.createPlotData(this.props.data));
     Plotly.newPlot(plotDiv, this.createPlotData(this.props.data), this.createLayout());
   }
 

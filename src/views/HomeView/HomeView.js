@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
-import './HomeView.scss';
 import { bindActionCreators } from 'redux';
 import { addData } from '../../redux/modules/log-data';
 

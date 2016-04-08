@@ -30,9 +30,7 @@ class RangeMetrics extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     const { plotDiv } = this.state;
-    console.debug(plotDiv);
     if (plotDiv) {
-      console.debug(nextProps);
       Plotly.newPlot(plotDiv, this.createPlotData(nextProps.data), this.createLayout());
     }
   }

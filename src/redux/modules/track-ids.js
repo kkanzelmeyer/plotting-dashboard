@@ -28,7 +28,7 @@ export const addIds = (data) => {
 const dataReducer = (state = fromJS([]), action) => {
   switch (action.type) {
 
-    case type.SET_DATA:
+    case type.SET_IDS:
       return fromJS(action.payload);
 
     default:

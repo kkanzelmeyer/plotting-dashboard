@@ -14,7 +14,7 @@ const getSummaryMetrics = (data) => {
   });
 
   return ({
-    trackIds: ids,
+    trackIds: ids.sort(),
     airThreats: airThreats,
     ramThreats: 0,
     radars: [
