@@ -4,16 +4,16 @@ import Plotly from 'plotly.js';
 
 class ThreatChart extends React.Component {
 
+  constructor () {
+    super();
+    this.state={};
+  }
+
   // data should be an array of track and truth data
   // filtered by a track id
   static propTypes = {
     data: PropTypes.object,
     title: PropTypes.string
-  }
-
-  constructor () {
-    super();
-    this.state={};
   }
 
   componentDidMount () {
@@ -24,18 +24,16 @@ class ThreatChart extends React.Component {
     Plotly.newPlot(plotDiv, this.createPlotData(this.props.data), this.createLayout());
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { plotDiv } = this.state;
-    if (plotDiv) {
-      Plotly.newPlot(plotDiv, this.createPlotData(nextProps.data), this.createLayout());
-    }
-  }
-
   createPlotData (data) {
     return [{
       values: [data.airThreats.value],
       labels: [data.airThreats.label],
-      hoverinfo: 'label+percent+name',
+      text: [data.airThreats.label],
+      annotations: {
+        xanchor: 'center',
+        color: '#ffff'
+      },
+      hoverinfo: 'label+value',
       hole: 0.6,
       type: 'pie',
       name: 'All Threats'
@@ -54,7 +52,7 @@ class ThreatChart extends React.Component {
         l: 20,
         r: 20
       },
-      hoverinfo: 'label+value+name',
+      hoverinfo: 'label+name',
       showlegend: false
     };
   }

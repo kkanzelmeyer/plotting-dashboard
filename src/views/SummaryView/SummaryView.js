@@ -7,15 +7,23 @@ import { addIds } from 'redux/modules/track-ids';
 
 export class SummaryView extends Component {
   constructor (props) {
-    const { data, addIds } = props;
     super();
-    this.metrics = getMetrics(data);
-    addIds(this.metrics.trackIds);
+    this.metrics = getMetrics(props.data);
+    this.saveIds = this.saveIds.bind(this);
   }
 
   static propTypes = {
     data: PropTypes.object,
     addIds: PropTypes.func
+  }
+
+  componentWillMount () {
+    this.saveIds();
+  }
+
+  saveIds () {
+    const { addIds } = this.props;
+    addIds(this.metrics.trackIds);
   }
 
   render () {
@@ -30,7 +38,7 @@ export class SummaryView extends Component {
         flex: '1'
       }}>
         <SummaryWidget
-          title='Scenario Threats'
+          title={`${threats.totalThreats.value} Threats`}
           data={threats}
           style={{
             display: 'flex'
