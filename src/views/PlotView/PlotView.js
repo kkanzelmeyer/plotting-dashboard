@@ -13,7 +13,6 @@ import Position3D from 'components/plots/Position3D';
 export class PlotView extends React.Component {
   constructor (props) {
     super();
-
     this.state = {
       selectedIndex: props.trackIds.first(),
       selectedField: 0,
@@ -47,6 +46,7 @@ export class PlotView extends React.Component {
     params: PropTypes.object,
     data: PropTypes.object,
     trackIds: PropTypes.object,
+    radars: PropTypes.object,
     containerHeight: PropTypes.number,
     containerWidth: PropTypes.number
   }
@@ -211,7 +211,8 @@ export class PlotView extends React.Component {
 
 const mapStateToProps = (state) => ({
   data: state.data,
-  trackIds: state.trackIds
+  trackIds: state.metrics.get('trackIds'),
+  radars: state.metrics.get('radarIds')
 });
 
 export default connect(mapStateToProps)(Dimensions()(PlotView));

@@ -6,16 +6,16 @@ import Action from '../action';
  * @type {Object}
  */
 export const type = {
-  SET_IDS: 'SET_IDS'
+  SET_METRICS: 'SET_METRICS'
 };
 
 /**
  * Action to add data to the state
  * @param  {[data]} data The data to add
  */
-export const addIds = (data) => {
+export const addMetrics = (data) => {
   return new Action(
-    type.SET_IDS,
+    type.SET_METRICS,
     data
   ).toObject();
 };
@@ -28,7 +28,8 @@ export const addIds = (data) => {
 const dataReducer = (state = fromJS([]), action) => {
   switch (action.type) {
 
-    case type.SET_IDS:
+    case type.SET_METRICS:
+      console.debug(action.payload);
       return fromJS(action.payload);
 
     default:
