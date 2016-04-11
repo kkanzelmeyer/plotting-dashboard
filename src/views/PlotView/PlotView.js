@@ -6,6 +6,7 @@ import Dimensions from 'react-dimensions';
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
 import Position from 'components/plots/Position';
+import PositionError from 'components/plots/PositionError';
 import BeamPosition from 'components/plots/BeamPosition';
 import RangeMetrics from 'components/plots/RangeMetrics';
 import Position3D from 'components/plots/Position3D';
@@ -105,6 +106,19 @@ export class PlotView extends React.Component {
           title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Time`}
           fieldX='t_valid'
           fieldY={this.fieldList[selectedField].field}
+          width={width}
+          height={height}
+          />;
+
+        break;
+
+      case 'position-error':
+        this.state.showFields = false;
+        this.state.showTrackList = true;
+        this.plot = <PositionError
+          data={trackData}
+          title={`Track ${selectedIndex} - Position Error`}
+          fieldX='t_valid'
           width={width}
           height={height}
           />;

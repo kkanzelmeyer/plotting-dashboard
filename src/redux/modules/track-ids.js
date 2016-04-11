@@ -29,7 +29,6 @@ const dataReducer = (state = fromJS([]), action) => {
   switch (action.type) {
 
     case type.SET_METRICS:
-      console.debug(action.payload);
       return fromJS(action.payload);
 
     default:

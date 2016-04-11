@@ -27,19 +27,18 @@ export class SummaryView extends Component {
   }
 
   render () {
-    const { trackIds, airThreats } = this.metrics;
-    const threats = {
-      totalThreats: {'label': 'Total Threats', 'value': trackIds.size},
-      airThreats: {'label': 'Air Threats', 'value': airThreats.size}
-    };
+    const { trackIds, airThreats, ramThreats } = this.metrics;
+    const labels = ['Air Threats', 'RAM Threats'];
+    const values = [airThreats.size, ramThreats.size];
     return (
       <div style={{
         display: 'flex',
         flex: '1'
       }}>
         <SummaryWidget
-          title={`${threats.totalThreats.value} Threats`}
-          data={threats}
+          title={`${trackIds.size} Threats`}
+          values={values}
+          labels={labels}
           style={{
             display: 'flex'
           }}

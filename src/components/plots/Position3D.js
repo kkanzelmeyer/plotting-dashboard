@@ -60,11 +60,15 @@ class Position3D extends React.Component {
         x: truthX,
         y: truthY,
         z: truthZ,
-        mode: 'markers',
+        mode: 'lines+markers',
         marker: {
           size: 8,
           opacity: 0.6,
           symbol: 'diamond'
+        },
+        line: {
+          opacity: 0.6,
+          shape: 'spline'
         },
         name: 'Truth'
       },
@@ -73,11 +77,15 @@ class Position3D extends React.Component {
         x: trackX,
         y: trackY,
         z: trackZ,
-        mode: 'markers',
+        mode: 'lines+markers',
         marker: {
           size: 6,
           opacity: 0.6,
           symbol: 'dot'
+        },
+        line: {
+          opacity: 0.6,
+          shape: 'spline'
         },
         name: 'Track'
       }

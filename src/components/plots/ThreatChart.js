@@ -13,6 +13,8 @@ class ThreatChart extends React.Component {
   // filtered by a track id
   static propTypes = {
     data: PropTypes.object,
+    values: PropTypes.array,
+    labels: PropTypes.array,
     title: PropTypes.string
   }
 
@@ -25,10 +27,11 @@ class ThreatChart extends React.Component {
   }
 
   createPlotData (data) {
+    const { values, labels } = this.props;
     return [{
-      values: [data.airThreats.value],
-      labels: [data.airThreats.label],
-      text: [data.airThreats.label],
+      values,
+      labels,
+      text: labels,
       annotations: {
         xanchor: 'center',
         color: '#ffff'
@@ -44,7 +47,7 @@ class ThreatChart extends React.Component {
     const { title } = this.props;
     return {
       title,
-      height: 300,
+      height: 350,
       width: 300,
       margin: {
         t: 0,

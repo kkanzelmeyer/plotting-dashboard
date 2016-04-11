@@ -8,11 +8,12 @@ class SummaryWidget extends Component {
 
   static propTypes = {
     title: PropTypes.string,
-    data: PropTypes.object
+    values: PropTypes.array,
+    labels: PropTypes.array
   }
 
   render () {
-    const { title, data } = this.props;
+    const { title, values, labels } = this.props;
     return (
       <Card>
         <CardHeader
@@ -23,7 +24,8 @@ class SummaryWidget extends Component {
         />
         <CardMedia>
           <ThreatChart
-            data={data}
+            values={values}
+            labels={labels}
             />
         </CardMedia>
       </Card>
