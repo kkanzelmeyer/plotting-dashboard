@@ -40,6 +40,8 @@ class PositionError extends React.Component {
   createPlotData (data) {
     let truths = [];
     let tracks = [];
+    let trackTimes = [];
+    let tMax = 0;
 
     // separate data into new arrays
     data.forEach((row, i) => {
@@ -48,28 +50,33 @@ class PositionError extends React.Component {
         row.get('sv_ecef_y'),
         row.get('sv_ecef_z')
       ));
+      let t = row.get('t_valid');
+      if (t > tMax) {
+        tMax = t;
+      }
       if (row.get('type') === 'truth') {
         truths.push(point);
       }
       if (row.get('type') === 'track') {
         tracks.push(point);
+        trackTimes.push(t);
       }
     });
     const truthSpline = new CatmullRomCurve3(truths);
-    const trackSpline = new CatmullRomCurve3(tracks);
     let errors = [];
-    let i;
     let indexes = [];
-    for (i = 0; i < 1; i += 0.1) {
-      let truthPoint = truthSpline.getPoint(i);
-      let trackPoint = trackSpline.getPoint(i);
+    trackTimes.forEach((time, i) => {
+      let tRel = time/tMax;
+      let trackPoint = tracks[i];
+      let truthPoint = truthSpline.getPoint(tRel);
       let distance = truthPoint.distanceTo(trackPoint);
-      errors.push(distance/truthPoint.length()*100);
+      errors.push(distance);
+      console.debug(distance);
       indexes.push(i);
-    }
+    });
     return [{
       type: 'scatter',
-      x: indexes,
+      x: trackTimes,
       y: errors,
       mode: 'markers+lines',
       marker: {
@@ -96,8 +103,7 @@ class PositionError extends React.Component {
         title: 'Time'
       },
       yaxis: {
-        title: 'Error',
-        range: [0, 0.03]
+        title: 'Error'
       }
     };
   }

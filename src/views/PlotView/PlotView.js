@@ -119,7 +119,7 @@ export class PlotView extends React.Component {
           data={trackData}
           title={`Track ${selectedIndex} - Position Error`}
           fieldX='t_valid'
-          width={width}
+          width={width+100}
           height={height}
           />;
 
