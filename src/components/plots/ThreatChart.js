@@ -48,15 +48,14 @@ class ThreatChart extends React.Component {
     return {
       title,
       height: 350,
-      width: 300,
+      width: 350,
       margin: {
         t: 0,
         b: 0,
         l: 20,
-        r: 20
+        r: 5
       },
-      hoverinfo: 'label+name',
-      showlegend: false
+      hoverinfo: 'label+name'
     };
   }
 

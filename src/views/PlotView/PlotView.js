@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SelectableList from 'components/SelectableList';
-import Infinite from 'react-infinite';
+// import Infinite from 'react-infinite';
 import Dimensions from 'react-dimensions';
-import classes from './PlotView.scss';
+// import classes from './PlotView.scss';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
@@ -33,7 +33,10 @@ export class PlotView extends React.Component {
       list: {
         display: 'flex',
         flex: '1',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        height: 'calc(100vh - 88px)'
       },
       plot: {
         display: 'flex',
@@ -143,7 +146,7 @@ export class PlotView extends React.Component {
           title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Range`}
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
-          width={width-10}
+          width={width}
           height={height}
           />;
         break;
@@ -165,7 +168,7 @@ export class PlotView extends React.Component {
         this.plot = <BeamPosition
           data={beamPositionData}
           title={'Beam Position'}
-          width={width+80}
+          width={width+140}
           height={height}
           fieldX={'azDeg'}
           fieldY={'elDeg'}
@@ -186,24 +189,17 @@ export class PlotView extends React.Component {
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          width: '140px',
+          width: '120px',
+          maxWidth: '120px',
           flex: '1',
           backgroundColor: '#fff'
         }}>
           {this.state.showTrackList
-            ? <Infinite
-              containerHeight={height - 1}
-              elementHeight={88}
-              className={classes.trackList}
-              style={{
-                overflowY: 'auto'
-              }}
-              >
-              <SelectableList
-                style={this.styles.list}
-                subheader='Track ID'
-                onChange={this.updateTrack}
-                selectedIndex={selectedIndex}
+            ? <SelectableList
+              style={this.styles.list}
+              subheader='Track ID'
+              onChange={this.updateTrack}
+              selectedIndex={selectedIndex}
               >
                 {
                   trackIds.map((id) => {
@@ -212,15 +208,15 @@ export class PlotView extends React.Component {
                         value={id}
                         key={id}
                         style={{
-                          padding: '0 10px'
+                          padding: '0 10px',
+                          minWidth: '100px'
                         }}
                       >
                       {id}
                       </ListItem>);
                   })
                 }
-              </SelectableList>
-            </Infinite>
+            </SelectableList>
             : null}
         </div>
         <div idName='plotView' style={this.styles.plot}>
