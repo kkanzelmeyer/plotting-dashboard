@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
 import { Vector3, CatmullRomCurve3 } from 'three';
+import Theme from '../../helpers/theme.js';
 
 class PositionError extends React.Component {
 
@@ -79,12 +80,13 @@ class PositionError extends React.Component {
       marker: {
         size: 8,
         opacity: 0.6,
-        symbol: 'dot'
-      },
-      line: {
-        opacity: 0.5,
-        width: 2,
-        shape: 'spline'
+        symbol: 'dot',
+        color: Theme.palette.track,
+        line: {
+          opacity: 0.5,
+          width: 1,
+          color: Theme.palette.truth
+        }
       },
       name: 'Truth'
     }];

@@ -5,6 +5,7 @@ import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import { SelectableContainerEnhance } from 'material-ui/lib/hoc/selectable-enhance';
 import Theme from '../../helpers/theme';
+import Logo from './a2i-logo.jpg';
 import {
   Spacing,
   Typography
@@ -49,10 +50,11 @@ class AppLeftNav extends React.Component {
         cursor: 'pointer',
         fontSize: 24,
         color: Typography.textFullWhite,
-        lineHeight: `${Spacing.desktopKeylineIncrement}px`,
+        height: `${Spacing.desktopKeylineIncrement}px`,
         fontWeight: Typography.fontWeightLight,
         backgroundColor: Theme.palette.primary1Color,
-        paddingLeft: 4,
+        paddingLeft: 25,
+        paddingTop: 15,
         marginBottom: 8
       }
     };
@@ -99,7 +101,7 @@ class AppLeftNav extends React.Component {
         zDepth={0}
       >
         <div style={prepareStyles(styles.logo)} onTouchTap={this.handleTouchTapHeader}>
-          <span height={86}>{Theme.companyName}</span>
+          <img src={Logo}></img>
         </div>
         <SelectableList
           valueLink={{ value: location.pathname, requestChange: onRequestChangeList }}

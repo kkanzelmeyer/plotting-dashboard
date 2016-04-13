@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
+import Theme from '../../helpers/theme.js';
 
 class BeamPosition extends React.Component {
 
@@ -56,9 +57,15 @@ class BeamPosition extends React.Component {
       y: beamY,
       mode: 'markers',
       marker: {
-        size: 18,
+        size: 12,
         opacity: 0.6,
-        symbol: 'dot'
+        symbol: 'dot',
+        color: Theme.palette.track,
+        line: {
+          opacity: 0.5,
+          width: 1,
+          color: Theme.palette.truth
+        }
       },
       name: 'Beam Position'
     }];

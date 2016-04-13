@@ -8,18 +8,20 @@ export default {
   zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: '#4CB8E9',
-    primary2Color: Colors.lightBlue400,
-    primary3Color: Colors.lightBlack,
-    accent1Color: Colors.lightGreen600,
+    primary1Color: '#000',
+    primary2Color: Colors.grey800,
+    primary3Color: Colors.grey800,
+    accent1Color: '#4cb8e9',
     accent2Color: Colors.grey100,
     accent3Color: Colors.grey500,
-    textColor: Colors.darkBlack,
-    alternateTextColor: Colors.white,
+    textColor: Colors.grey900,
+    alternateTextColor: Colors.grey500,
     canvasColor: Colors.white,
     borderColor: Colors.grey300,
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
-    pickerHeaderColor: '#4CB8E9'
+    pickerHeaderColor: '#4CB8E9',
+    truth: '#1565C0',
+    track: '#64B5F6'
   },
   companyName: 'Archarithms, Inc',
   appName: 'Radar Analysis Suite'

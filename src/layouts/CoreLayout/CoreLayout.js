@@ -63,7 +63,8 @@ export class CoreLayout extends React.Component {
         position: 'fixed',
         // Needed to overlap the examples
         zIndex: this.state.muiTheme.zIndex.appBar + 1,
-        top: 0
+        top: 0,
+        fontFamily: Theme.fontFamily
       },
       root: {
         paddingTop: Spacing.desktopKeylineIncrement,
@@ -162,7 +163,7 @@ export class CoreLayout extends React.Component {
       title =
         router.isActive('/calls') ? 'Calls'
         : router.isActive('/partners') ? 'Partners'
-        : router.isActive('/plot/:plotType') ? 'Plots'
+        : router.isActive('/plot') ? 'Plots'
         : Theme.appName;
     }
 

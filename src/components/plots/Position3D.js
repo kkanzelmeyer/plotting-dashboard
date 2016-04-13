@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
+import Theme from '../../helpers/theme.js';
 
 class Position3D extends React.Component {
 
@@ -62,12 +63,20 @@ class Position3D extends React.Component {
         z: truthZ,
         mode: 'lines+markers',
         marker: {
+          color: Theme.palette.truth,
           size: 8,
-          opacity: 0.6,
-          symbol: 'diamond'
+          opacity: 0.5,
+          symbol: 'diamond',
+          line: {
+            opacity: 0.8,
+            width: 1,
+            weight: 3,
+            color: Theme.palette.truth
+          }
         },
         line: {
           opacity: 0.6,
+          weight: 3,
           shape: 'spline'
         },
         name: 'Truth'
@@ -79,9 +88,15 @@ class Position3D extends React.Component {
         z: trackZ,
         mode: 'lines+markers',
         marker: {
+          color: Theme.palette.track,
           size: 6,
-          opacity: 0.6,
-          symbol: 'dot'
+          opacity: 0.5,
+          symbol: 'dot',
+          line: {
+            opacity: 0.8,
+            width: 1,
+            color: Theme.palette.track
+          }
         },
         line: {
           opacity: 0.6,

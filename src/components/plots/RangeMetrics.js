@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
+import Theme from '../../helpers/theme.js';
 
 class RangeMetrics extends React.Component {
 
@@ -54,9 +55,15 @@ class RangeMetrics extends React.Component {
       y: trackY,
       mode: 'markers',
       marker: {
-        size: 14,
+        size: 12,
         opacity: 0.6,
-        symbol: 'diamond'
+        symbol: 'dot',
+        color: Theme.palette.track,
+        line: {
+          opacity: 0.5,
+          width: 1,
+          color: Theme.palette.truth
+        }
       },
       name: 'Track'
     }];

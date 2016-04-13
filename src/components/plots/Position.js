@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
+import Theme from '../../helpers/theme.js';
 
 class Position extends React.Component {
 
@@ -60,6 +61,7 @@ class Position extends React.Component {
       y: truthY,
       mode: 'markers',
       marker: {
+        color: Theme.palette.truth,
         size: 18,
         opacity: 0.6,
         symbol: 'dot'
@@ -72,6 +74,7 @@ class Position extends React.Component {
       y: trackY,
       mode: 'markers',
       marker: {
+        color: Theme.palette.track,
         size: 10,
         opacity: 0.6,
         symbol: 'diamond'

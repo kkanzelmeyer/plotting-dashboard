@@ -17,10 +17,8 @@ class SummaryWidget extends Component {
     return (
       <Card>
         <CardHeader
-          title={title}
-          style={{
-            marginBottom: '-40px'
-          }}
+          title='Threat Summary'
+          subtitle={title}
         />
         <CardMedia>
           <ThreatChart
