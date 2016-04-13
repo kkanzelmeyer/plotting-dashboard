@@ -36,11 +36,16 @@ class BeamPosition extends React.Component {
   }
 
   createPlotData (data) {
+    // get beam position data
+    const beamPositionData = data.filter((row) => {
+      return row.get('type') === 'beamPosition';
+    });
+
     const { fieldX, fieldY } = this.props;
     let beamX = [];
     let beamY = [];
 
-    data.forEach((row) => {
+    beamPositionData.forEach((row) => {
       beamX.push(row.get(fieldX));
       beamY.push(row.get(fieldY));
     });

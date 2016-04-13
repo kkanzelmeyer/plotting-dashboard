@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
-// import vec3 from 'gl-vec3';
 import { Vector3, CatmullRomCurve3 } from 'three';
 
 class PositionError extends React.Component {

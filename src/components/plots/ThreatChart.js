@@ -31,7 +31,7 @@ class ThreatChart extends React.Component {
     return [{
       values,
       labels,
-      text: labels,
+      textinfo: 'label+value',
       annotations: {
         xanchor: 'center',
         color: '#ffff'

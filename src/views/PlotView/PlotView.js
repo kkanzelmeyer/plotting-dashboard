@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SelectableList from 'components/SelectableList';
-// import Infinite from 'react-infinite';
 import Dimensions from 'react-dimensions';
-// import classes from './PlotView.scss';
+import classes from './PlotView.scss';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
@@ -28,23 +27,6 @@ export class PlotView extends React.Component {
     };
     this.updateTrack = this.updateTrack.bind(this);
     this.updateField = this.updateField.bind(this);
-
-    this.styles = {
-      list: {
-        display: 'flex',
-        flex: '1',
-        flexDirection: 'column',
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        height: 'calc(100vh - 88px)'
-      },
-      plot: {
-        display: 'flex',
-        flex: '1',
-        flexDirection: 'column',
-        height: 'calc(100vh - 88px)'
-      }
-    };
   }
 
   componentDidMount () {
@@ -92,10 +74,6 @@ export class PlotView extends React.Component {
     const width = containerWidth-180;
     const { selectedIndex, selectedField } = this.state;
 
-    // get beam position data
-    const beamPositionData = data.filter((row) => {
-      return row.get('type') === 'beamPosition';
-    });
     // get track data
     const trackData = data.filter((row) => row.get('id') === selectedIndex);
 
@@ -166,10 +144,10 @@ export class PlotView extends React.Component {
         this.state.showFields = false;
         this.state.showTrackList = false;
         this.plot = <BeamPosition
-          data={beamPositionData}
+          data={data}
           title={'Beam Position'}
           width={width+140}
-          height={height}
+          height={height+1}
           fieldX={'azDeg'}
           fieldY={'elDeg'}
           />;
@@ -196,7 +174,7 @@ export class PlotView extends React.Component {
         }}>
           {this.state.showTrackList
             ? <SelectableList
-              style={this.styles.list}
+              className={classes.list}
               subheader='Track ID'
               onChange={this.updateTrack}
               selectedIndex={selectedIndex}
@@ -219,13 +197,13 @@ export class PlotView extends React.Component {
             </SelectableList>
             : null}
         </div>
-        <div idName='plotView' style={this.styles.plot}>
+        <div idName='plotView' className={classes.plot}>
           {this.plot}
         </div>
         <div>
           {this.state.showFields
           ? <SelectableList
-            style={this.styles.list}
+            className={classes.list}
             subheader='Field'
             onChange={this.updateField}
             selectedIndex={selectedField}
