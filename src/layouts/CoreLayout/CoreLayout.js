@@ -103,9 +103,13 @@ export class CoreLayout extends React.Component {
   }
 
   handleTouchTapLeftIconButton () {
+    const { router } = this.context;
     this.setState({
       leftNavOpen: !this.state.leftNavOpen
     });
+    if (router) {
+      router.push('/');
+    }
   }
 
   handleChangeMuiTheme (muiTheme) {

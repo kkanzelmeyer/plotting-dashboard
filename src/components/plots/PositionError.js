@@ -16,7 +16,6 @@ class PositionError extends React.Component {
   }
 
   constructor () {
-    console.debug('position error');
     super();
     this.state = {};
   }
@@ -71,7 +70,6 @@ class PositionError extends React.Component {
       let truthPoint = truthSpline.getPoint(tRel);
       let distance = truthPoint.distanceTo(trackPoint);
       errors.push(distance);
-      console.debug(distance);
       indexes.push(i);
     });
     return [{

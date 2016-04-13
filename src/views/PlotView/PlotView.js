@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SelectableList from 'components/SelectableList';
+import Infinite from 'react-infinite';
 import Dimensions from 'react-dimensions';
+import classes from './PlotView.scss';
 // material UI
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
@@ -13,6 +15,10 @@ import Position3D from 'components/plots/Position3D';
 
 export class PlotView extends React.Component {
   constructor (props) {
+    const { data } = props;
+    if (data.isEmpty()) {
+      window.location = '/';
+    }
     super();
     this.state = {
       selectedIndex: props.trackIds.first(),
@@ -27,8 +33,7 @@ export class PlotView extends React.Component {
       list: {
         display: 'flex',
         flex: '1',
-        flexDirection: 'column',
-        height: 'calc(100vh - 88px)'
+        flexDirection: 'column'
       },
       plot: {
         display: 'flex',
@@ -81,7 +86,7 @@ export class PlotView extends React.Component {
   render () {
     const { params, data, trackIds, containerWidth, containerHeight } = this.props;
     const height = containerHeight;
-    const width = containerWidth-150;
+    const width = containerWidth-180;
     const { selectedIndex, selectedField } = this.state;
 
     // get beam position data
@@ -119,7 +124,7 @@ export class PlotView extends React.Component {
           data={trackData}
           title={`Track ${selectedIndex} - Position Error`}
           fieldX='t_valid'
-          width={width+100}
+          width={width+80}
           height={height}
           />;
 
@@ -138,7 +143,7 @@ export class PlotView extends React.Component {
           title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Range`}
           fieldX='range'
           fieldY={this.fieldList[selectedField].field}
-          width={width}
+          width={width-10}
           height={height}
           />;
         break;
@@ -149,7 +154,7 @@ export class PlotView extends React.Component {
         this.plot = <Position3D
           data={trackData}
           title={`Position ECEF - Track ${selectedIndex}`}
-          width={width}
+          width={width+80}
           height={height}
           />;
         break;
@@ -160,7 +165,7 @@ export class PlotView extends React.Component {
         this.plot = <BeamPosition
           data={beamPositionData}
           title={'Beam Position'}
-          width={width+100}
+          width={width+80}
           height={height}
           fieldX={'azDeg'}
           fieldY={'elDeg'}
@@ -174,17 +179,31 @@ export class PlotView extends React.Component {
     return (
       <div style={{
         display: 'flex',
-        flex: '1 1 auto',
+        flex: '1',
         backgroundColor: '#fff'
       }}
       >
-        <div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '140px',
+          flex: '1',
+          backgroundColor: '#fff'
+        }}>
           {this.state.showTrackList
-            ? <SelectableList
-              style={this.styles.list}
-              subheader='Track ID'
-              onChange={this.updateTrack}
-              selectedIndex={selectedIndex}
+            ? <Infinite
+              containerHeight={height - 1}
+              elementHeight={88}
+              className={classes.trackList}
+              style={{
+                overflowY: 'auto'
+              }}
+              >
+              <SelectableList
+                style={this.styles.list}
+                subheader='Track ID'
+                onChange={this.updateTrack}
+                selectedIndex={selectedIndex}
               >
                 {
                   trackIds.map((id) => {
@@ -192,12 +211,16 @@ export class PlotView extends React.Component {
                       <ListItem
                         value={id}
                         key={id}
+                        style={{
+                          padding: '0 10px'
+                        }}
                       >
                       {id}
                       </ListItem>);
                   })
                 }
-            </SelectableList>
+              </SelectableList>
+            </Infinite>
             : null}
         </div>
         <div idName='plotView' style={this.styles.plot}>

@@ -36,6 +36,7 @@ class AppLeftNav extends React.Component {
   }
 
   handleTouchTapHeader () {
+    window.location = '/';
     this.props.history.push('/');
     this.setState({
       leftNavOpen: false
