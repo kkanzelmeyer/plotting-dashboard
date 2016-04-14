@@ -64,7 +64,12 @@ class Position extends React.Component {
         color: Theme.palette.truth,
         size: 18,
         opacity: 0.6,
-        symbol: 'dot'
+        symbol: 'dot',
+        line: {
+          opacity: 1.0,
+          width: 1,
+          color: Theme.palette.truth
+        }
       },
       name: 'Truth'
     },
@@ -76,8 +81,13 @@ class Position extends React.Component {
       marker: {
         color: Theme.palette.track,
         size: 10,
-        opacity: 0.6,
-        symbol: 'diamond'
+        opacity: 0.5,
+        symbol: 'diamond',
+        line: {
+          opacity: 1.0,
+          width: 1,
+          color: Theme.palette.truth
+        }
       },
       name: 'Track'
     }];
