@@ -87,6 +87,7 @@ class AppLeftNav extends React.Component {
       { primaryText: 'Summary', value: '/summary' },
       { primaryText: 'Position', value: '/plot/position' },
       { primaryText: 'Position Error', value: '/plot/position-error' },
+      { primaryText: 'Velocity Error', value: '/plot/velocity-error' },
       { primaryText: 'Position 3D', value: '/plot/position-3d' },
       { primaryText: 'Range Metrics', value: '/plot/range-metrics' },
       { primaryText: 'Beam Position', value: '/plot/beam-position' }

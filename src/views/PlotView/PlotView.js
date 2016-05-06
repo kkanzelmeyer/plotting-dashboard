@@ -7,7 +7,7 @@ import classes from './PlotView.scss';
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
 import Position from 'components/plots/Position';
-import PositionError from 'components/plots/PositionError';
+import ErrorPlot from 'components/plots/ErrorPlot';
 import BeamPosition from 'components/plots/BeamPosition';
 import RangeMetrics from 'components/plots/RangeMetrics';
 import Position3D from 'components/plots/Position3D';
@@ -101,10 +101,23 @@ export class PlotView extends React.Component {
       case 'position-error':
         this.state.showFields = false;
         this.state.showTrackList = true;
-        this.plot = <PositionError
+        this.plot = <ErrorPlot
           data={trackData}
           title={`Track ${selectedIndex} - Position Error`}
-          fieldX='t_valid'
+          error='error'
+          width={width+80}
+          height={height}
+          />;
+
+        break;
+
+      case 'velocity-error':
+        this.state.showFields = false;
+        this.state.showTrackList = true;
+        this.plot = <ErrorPlot
+          data={trackData}
+          title={`Track ${selectedIndex} - Velocity Error`}
+          error='errorV'
           width={width+80}
           height={height}
           />;

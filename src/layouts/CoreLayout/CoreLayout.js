@@ -105,11 +105,15 @@ export class CoreLayout extends React.Component {
 
   handleTouchTapLeftIconButton () {
     const { router } = this.context;
+    const {
+      dispatch
+    } = this.props;
     this.setState({
       leftNavOpen: !this.state.leftNavOpen
     });
+    dispatch(routeActions.push('/'));
     if (router) {
-      router.push('/');
+      // router.push('/');
     }
   }
 
@@ -160,10 +164,7 @@ export class CoreLayout extends React.Component {
     const styles = this.styles;
     let title;
     if (router) {
-      title =
-        router.isActive('/calls') ? 'Calls'
-        : router.isActive('/partners') ? 'Partners'
-        : router.isActive('/plot') ? 'Plots'
+      title = router.isActive('/plot:plotType') ? 'Plots'
         : Theme.appName;
     }
 
