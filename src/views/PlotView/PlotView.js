@@ -7,6 +7,7 @@ import classes from './PlotView.scss';
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
 import Position from 'components/plots/Position';
+import RAE from 'components/plots/RAE';
 import ErrorPlot from 'components/plots/ErrorPlot';
 import BeamPosition from 'components/plots/BeamPosition';
 import RangeMetrics from 'components/plots/RangeMetrics';
@@ -94,6 +95,27 @@ export class PlotView extends React.Component {
           fieldY={this.fieldList[selectedField].field}
           width={width}
           height={height}
+          />;
+
+        break;
+
+      case 'rae':
+        this.state.showFields = true;
+        this.state.showTrackList = true;
+        this.fieldList = [
+          { name: 'Azimuth', field: 'azDeg' },
+          { name: 'Elevation', field: 'elDeg' },
+          { name: 'Range', field: 'range' }
+        ];
+        const antenna = data.filter((row) => row.get('type') === 'antenna').get(0);
+        this.plot = <RAE
+          data={trackData}
+          title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Time`}
+          fieldX='t_valid'
+          fieldY={this.fieldList[selectedField].field}
+          width={width}
+          height={height}
+          antenna={antenna}
           />;
 
         break;
