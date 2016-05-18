@@ -7,6 +7,7 @@ import classes from './PlotView.scss';
 import ListItem from 'material-ui/lib/lists/list-item';
 // plots
 import Position from 'components/plots/Position';
+import PositionLLA from 'components/plots/PositionLLA';
 import RAE from 'components/plots/RAE';
 import ErrorPlot from 'components/plots/ErrorPlot';
 import BeamPosition from 'components/plots/BeamPosition';
@@ -28,6 +29,8 @@ export class PlotView extends React.Component {
     };
     this.updateTrack = this.updateTrack.bind(this);
     this.updateField = this.updateField.bind(this);
+    this.antenna = data.filter((row) => row.get('type') === 'antenna').get(0);
+    console.debug(this.antenna);
   }
 
   componentDidMount () {
@@ -99,6 +102,21 @@ export class PlotView extends React.Component {
 
         break;
 
+      case 'position-lla':
+        this.state.showFields = false;
+        this.state.showTrackList = true;
+        this.plot = <PositionLLA
+          data={trackData}
+          title={`Track ${selectedIndex} - LLA`}
+          fieldX='lon'
+          fieldY='lat'
+          width={width}
+          height={height}
+          antenna={this.antenna}
+          />;
+
+        break;
+
       case 'rae':
         this.state.showFields = true;
         this.state.showTrackList = true;
@@ -107,7 +125,7 @@ export class PlotView extends React.Component {
           { name: 'Elevation', field: 'elDeg' },
           { name: 'Range', field: 'range' }
         ];
-        const antenna = data.filter((row) => row.get('type') === 'antenna').get(0);
+        // const antenna = data.filter((row) => row.get('type') === 'antenna').get(0);
         this.plot = <RAE
           data={trackData}
           title={`Track ${selectedIndex} - ${this.fieldList[selectedField].name} vs Time`}
@@ -115,7 +133,7 @@ export class PlotView extends React.Component {
           fieldY={this.fieldList[selectedField].field}
           width={width}
           height={height}
-          antenna={antenna}
+          antenna={this.antenna}
           />;
 
         break;
@@ -166,11 +184,12 @@ export class PlotView extends React.Component {
 
       case 'position-3d':
         this.state.showFields = false;
-        this.state.showTrackList = true;
+        this.state.showTrackList = false;
         this.plot = <Position3D
-          data={trackData}
-          title={`Position ECEF - Track ${selectedIndex}`}
-          width={width+80}
+          data={data}
+          antenna={this.antenna}
+          title={'Position LLA'}
+          width={width+140}
           height={height}
           />;
         break;
