@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import { routeActions } from 'react-router-redux';
 import { connect } from 'react-redux';
 import AppBar from 'material-ui/lib/app-bar';
+import IconButton from 'material-ui/lib/icon-button';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import { Spacing, Colors } from 'material-ui/lib/styles';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import Theme from '../../helpers/theme';
@@ -61,8 +65,9 @@ export class CoreLayout extends React.Component {
     const styles = {
       appBar: {
         position: 'fixed',
+        width: width-256,
         // Needed to overlap the examples
-        zIndex: this.state.muiTheme.zIndex.appBar + 1,
+        // zIndex: this.state.muiTheme.zIndex.appBar + 1,
         top: 0,
         fontFamily: Theme.fontFamily
       },
@@ -98,6 +103,9 @@ export class CoreLayout extends React.Component {
 
     if (width < 768) {
       styles.content = Object.assign(styles.content, styles.contentWhenMedium);
+    }
+    if (width < 992) {
+      styles.appBar = Object.assign(styles.appBar, {width: width});
     }
 
     return styles;
@@ -186,9 +194,21 @@ export class CoreLayout extends React.Component {
     return (
       <div>
         <AppBar
-          onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
           title={title}
-          zDepth={0}
+          onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
+          iconElementRight={
+            <IconMenu
+              iconButtonElement={
+                <IconButton><MoreVertIcon /></IconButton>
+              }
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+              <MenuItem primaryText='Toggle Heatmap' />
+              <MenuItem primaryText='Help' />
+              <MenuItem primaryText='Sign out' />
+            </IconMenu>
+          }
           style={styles.appBar}
           showMenuIconButton={showMenuIconButton}
         />
