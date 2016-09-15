@@ -9,6 +9,7 @@ class Position extends React.Component {
   // filtered by a track id
   static propTypes = {
     data: PropTypes.object,
+    radars: PropTypes.object,
     title: PropTypes.string,
     width: PropTypes.number,
     fieldX: PropTypes.string,
@@ -39,10 +40,12 @@ class Position extends React.Component {
 
   createPlotData (data) {
     const { fieldX, fieldY } = this.props;
+    // let radars = [];
     let truthX = [];
     let truthY = [];
-    let trackX = [];
-    let trackY = [];
+    // let trackX = [];
+    // let trackY = [];
+    let tracks = [];
 
     data.forEach((row) => {
       if (row.get('type') === 'truth') {
@@ -50,11 +53,19 @@ class Position extends React.Component {
         truthY.push(row.get(fieldY));
       }
       if (row.get('type') === 'track') {
-        trackX.push(row.get(fieldX));
-        trackY.push(row.get(fieldY));
+        tracks[row.get('radar_id', 'undefined')]['xVals'].push(row.get(fieldX));
+        tracks[row.get('radar_id', 'undefined')]['yVals'].push(row.get(fieldY));
+        // trackX.push(row.get(fieldX));
+        // trackY.push(row.get(fieldY));
       }
     });
 
+    let trackSeries = [];
+    tracks.forEach((entry) => {
+
+    })
+
+    // })
     return [{
       type: 'scatter',
       x: truthX,
@@ -88,8 +99,8 @@ class Position extends React.Component {
           width: 1,
           color: Theme.palette.truth
         }
-      },
-      name: 'Track'
+      }
+      // name: `Track - ${radarId}`
     }];
   }
 
