@@ -1,0 +1,193 @@
+[{
+  "name": "bigio",
+  "description": "rest to bigio endpoint test",
+  "iterations": 100,
+  "connections": 1,
+  "data": {
+    "totalElapsed": 4212.825955033302,
+    "main": {
+      "meter": {
+        "mean": 23.753112869146456,
+        "count": 100,
+        "currentRate": 23.753007458434965,
+        "1MinuteRate": 0,
+        "5MinuteRate": 0,
+        "15MinuteRate": 0
+      },
+      "histogram": {
+        "min": 25.96016490459442,
+        "max": 48.851555943489075,
+        "sum": 4192.980865240097,
+        "variance": 9.265749221501146,
+        "mean": 41.92980865240097,
+        "stddev": 3.0439693200656843,
+        "count": 100,
+        "median": 40.09217256307602,
+        "p75": 43.893757462501526,
+        "p95": 47.48497223854065,
+        "p99": 48.85140387415886,
+        "p999": 48.851555943489075
+      }
+    }
+  }
+}, {
+  "name": "control",
+  "description": "rest to response endpoint test. no work performed by the endpoint",
+  "iterations": 100,
+  "connections": 1,
+  "data": {
+    "totalElapsed": 4138.472139000893,
+    "main": {
+      "meter": {
+        "mean": 24.190985469263126,
+        "count": 100,
+        "currentRate": 24.19101629212607,
+        "1MinuteRate": 0,
+        "5MinuteRate": 0,
+        "15MinuteRate": 0
+      },
+      "histogram": {
+        "min": 7.045898914337158,
+        "max": 47.80084693431854,
+        "sum": 4110.655344128609,
+        "variance": 16.44922825660491,
+        "mean": 41.10655344128609,
+        "stddev": 4.055764817713783,
+        "count": 100,
+        "median": 40.00636553764343,
+        "p75": 43.73729023337364,
+        "p95": 45.1611562013626,
+        "p99": 47.79174273610115,
+        "p999": 47.80084693431854
+      }
+    }
+  }
+}, {
+  "name": "websocket",
+  "description": "rest to websocket endpoint test.",
+  "iterations": 100,
+  "connections": 1,
+  "data": {
+    "totalElapsed": 4338.691894054413,
+    "main": {
+      "meter": {
+        "mean": 23.053042612800628,
+        "count": 100,
+        "currentRate": 23.05280753153436,
+        "1MinuteRate": 0,
+        "5MinuteRate": 0,
+        "15MinuteRate": 0
+      },
+      "histogram": {
+        "min": 18.984888076782227,
+        "max": 54.22439193725586,
+        "sum": 4317.468963027,
+        "variance": 17.824759185982913,
+        "mean": 43.17468963027,
+        "stddev": 4.221937847243007,
+        "count": 100,
+        "median": 43.559813022613525,
+        "p75": 44.96453449130058,
+        "p95": 49.89162658452986,
+        "p99": 54.220661867856975,
+        "p999": 54.22439193725586
+      }
+    }
+  }
+}, {
+  "name": "database",
+  "description": "rest to database endpoint test",
+  "iterations": 100,
+  "connections": 1,
+  "data": {
+    "totalElapsed": 5194.980808019638,
+    "main": {
+      "meter": {
+        "mean": 19.258562269454394,
+        "count": 100,
+        "currentRate": 19.258566497620834,
+        "1MinuteRate": 1.5511383561911303,
+        "5MinuteRate": 0.3206537958606228,
+        "15MinuteRate": 0.10747894870500131
+      },
+      "histogram": {
+        "min": 8.541566014289856,
+        "max": 143.37520098686218,
+        "sum": 5179.705497980118,
+        "variance": 514.0731795172518,
+        "mean": 51.797054979801175,
+        "stddev": 22.673181945136236,
+        "count": 100,
+        "median": 43.95886051654816,
+        "p75": 47.78301551938057,
+        "p95": 112.4066698372364,
+        "p99": 143.29727760672566,
+        "p999": 143.37520098686218
+      }
+    }
+  }
+}, {
+  "name": "full",
+  "description": "rest to database and publish on bigio and websocket test",
+  "iterations": 100,
+  "connections": 1,
+  "data": {
+    "totalElapsed": 5303.005155086517,
+    "main": {
+      "meter": {
+        "mean": 18.870936799794993,
+        "count": 100,
+        "currentRate": 18.870841006320177,
+        "1MinuteRate": 1.5031650049687244,
+        "5MinuteRate": 0.31073666815359324,
+        "15MinuteRate": 0.1041548575079394
+      },
+      "histogram": {
+        "min": 42.57359600067139,
+        "max": 139.96695399284363,
+        "sum": 5282.271545410156,
+        "variance": 473.2021656760817,
+        "mean": 52.82271545410156,
+        "stddev": 21.753210468252306,
+        "count": 100,
+        "median": 44.00089508295059,
+        "p75": 47.95020866394043,
+        "p95": 112.07703887820244,
+        "p99": 139.92595195293424,
+        "p999": 139.96695399284363
+      }
+    }
+  }
+}, {
+  "name": "full1000",
+  "description": "rest to database and publish on bigio and websocket. 1000 connections, 10,000 requests",
+  "iterations": 10000,
+  "connections": 1000,
+  "data": {
+    "totalElapsed": 34521.68521499634,
+    "main": {
+      "meter": {
+        "mean": 290.85808192352687,
+        "count": 10000,
+        "currentRate": 290.8580510546047,
+        "1MinuteRate": 108.35222961101147,
+        "5MinuteRate": 25.73165645878125,
+        "15MinuteRate": 8.836388961542623
+      },
+      "histogram": {
+        "min": 960.804151058197,
+        "max": 18589.443243026733,
+        "sum": 33541651.572026372,
+        "variance": 3525200.647108821,
+        "mean": 3354.165157202637,
+        "stddev": 1877.5517694883465,
+        "count": 10000,
+        "median": 3169.6676050424576,
+        "p75": 3310.366877526045,
+        "p95": 5645.742244464159,
+        "p99": 10751.92444155693,
+        "p999": 18552.596745244624
+      }
+    }
+  }
+}]

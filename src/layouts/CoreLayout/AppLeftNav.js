@@ -91,7 +91,8 @@ class AppLeftNav extends React.Component {
       { primaryText: 'Position 3D', value: '/plot/position-3d' },
       { primaryText: 'Range Metrics', value: '/plot/range-metrics' },
       { primaryText: 'Beam Position', value: '/plot/beam-position' },
-      { primaryText: 'RAE', value: '/plot/rae' }
+      { primaryText: 'RAE', value: '/plot/rae' },
+      { primaryText: 'Impression', value: '/analysis' }
     ];
 
     return (

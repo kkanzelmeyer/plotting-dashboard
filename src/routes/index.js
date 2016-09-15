@@ -11,6 +11,7 @@ import HomeView from 'views/HomeView/HomeView';
 import NotFoundView from 'views/NotFoundView/NotFoundView';
 import PlotView from 'views/PlotView/PlotView';
 import SummaryView from 'views/SummaryView/SummaryView';
+import AnalysisView from 'views/AnalysisView/AnalysisView';
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
@@ -18,6 +19,7 @@ export default (store) => (
     <Route path='/404' component={NotFoundView} />
     <Route path='/plot/:plotType' component={PlotView} />
     <Route path='/summary' component={SummaryView} />
+    <Route path='/analysis' component={AnalysisView} />
     <Redirect from='*' to='/404' />
   </Route>
 );
