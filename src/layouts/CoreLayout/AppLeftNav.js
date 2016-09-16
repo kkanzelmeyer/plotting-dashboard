@@ -91,8 +91,7 @@ class AppLeftNav extends React.Component {
       { primaryText: 'Position 3D', value: '/plot/position-3d' },
       { primaryText: 'Range Metrics', value: '/plot/range-metrics' },
       { primaryText: 'Beam Position', value: '/plot/beam-position' },
-      { primaryText: 'RAE', value: '/plot/rae' },
-      { primaryText: 'Impression', value: '/analysis' }
+      { primaryText: 'RAE', value: '/plot/rae' }
     ];
 
     return (
@@ -119,6 +118,12 @@ class AppLeftNav extends React.Component {
                 style={menuStyle}/>;
             })
           }
+          <ListItem
+            primaryText={'Impression'}
+            value={'/impression'}/>
+          <ListItem
+            primaryText={'REST'}
+            value={'/rest'}/>
         </SelectableList>
       </LeftNav>
     );

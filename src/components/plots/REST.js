@@ -4,9 +4,7 @@ import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
 // import Theme from '../../helpers/theme.js';
 import { connect } from 'react-redux';
-import ethData from 'static/bigio-roundtrip-ethernet.json';
-import wifiData from 'static/bigio-roundtrip-wifi.json';
-import localData from 'static/bigio-roundtrip-local.json';
+import RESTData from 'static/bench-rest-results.json';
 
 class Position extends React.Component {
 
@@ -38,72 +36,57 @@ class Position extends React.Component {
   }
 
   createPlotData (data) {
-    let delta;
-
-    const ethernetDeltas = [];
-    const ethernet = fromJS(ethData);
-    ethernet.forEach((row) => {
-      delta = row.get('receive') - row.get('publish');
-      ethernetDeltas.push(delta);
+    // let delta;
+    const names = [];
+    const medians = [];
+    const means = [];
+    const results = [];
+    const restData = fromJS(RESTData);
+    restData.forEach(row => {
+      names.push(row.get('name'));
+      const obj = row.toJS();
+      means.push(obj.data.main.histogram.mean); medians.push(obj.data.main.histogram.median);
     });
-
-    const wifiDeltas = [];
-    const wifi = fromJS(wifiData);
-    wifi.forEach((row) => {
-      delta = row.get('receive') - row.get('publish');
-      wifiDeltas.push(delta);
-    });
-
-    const localDeltas = [];
-    const local = fromJS(localData);
-    local.forEach((row) => {
-      delta = row.get('receive') - row.get('publish');
-      localDeltas.push(delta);
+    restData.forEach(row => {
+      const obj = row.toJS();
+      const y = [obj.data.main.histogram.mean, obj.data.main.histogram.median];
+      console.debug(y);
+      results.push({
+        type: 'bar',
+        x: names,
+        y,
+        name: row.get('name'),
+        opacity: 0.5
+      });
     });
 
     return [
       {
-        type: 'histogram',
-        x: ethernetDeltas,
-        name: 'Ethernet',
-        opacity: 0.5,
-        marker: {
-          color: 'green'
-        }
+        type: 'bar',
+        x: names,
+        y: means,
+        name: 'mean',
+        opacity: 0.5
       },
       {
-        type: 'histogram',
-        x: localDeltas,
-        name: 'Local',
-        opacity: 0.5,
-        marker: {
-          color: 'blue'
-        }
-      },
-      {
-        type: 'histogram',
-        x: wifiDeltas,
-        name: 'Wifi',
-        opacity: 0.5,
-        marker: {
-          color: 'red'
-        }
+        type: 'bar',
+        x: names,
+        y: medians,
+        name: 'median',
+        opacity: 0.5
       }
     ];
   }
 
   createLayout () {
     return {
-      title: 'BigIO Round Trip Latency',
+      title: 'REST Load Times',
       height: '860',
       width: '1500',
-      xaxis: {
+      yaxis: {
         title: 'Time (ms)'
       },
-      yaxis: {
-        title: 'Frequency'
-      },
-      barmode: 'overlay'
+      barmode: 'group'
     };
   }
 

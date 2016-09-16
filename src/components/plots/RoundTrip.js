@@ -2,11 +2,18 @@ import React, { PropTypes } from 'react';
 import { fromJS } from 'immutable';
 import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js';
+// material-ui
+import Tabs from 'material-ui/lib/tabs/tabs';
+import Tab from 'material-ui/lib/tabs/tab';
 // import Theme from '../../helpers/theme.js';
 import { connect } from 'react-redux';
 import ethData from 'static/bigio-roundtrip-ethernet.json';
 import wifiData from 'static/bigio-roundtrip-wifi.json';
 import localData from 'static/bigio-roundtrip-local.json';
+import socketEthData from 'static/websocket-roundtrip-ethernet.json';
+import socketWifiData from 'static/websocket-roundtrip-wifi.json';
+import socketLocalData from 'static/websocket-roundtrip-local.json';
+/* eslint-disable react/jsx-no-bind */
 
 class Position extends React.Component {
 
@@ -22,18 +29,25 @@ class Position extends React.Component {
   }
 
   componentDidMount () {
-    const plotDiv = ReactDOM.findDOMNode(this);
+    const bigioPlotDiv = ReactDOM.findDOMNode(this.bigioPlotRef);
+    const socketPlotDiv = ReactDOM.findDOMNode(this.socketPlotRef);
+    // const plotDiv = ReactDOM.findDOMNode(this);
     this.setState({
-      plotDiv
+      bigioPlotDiv,
+      socketPlotDiv
     });
-    Plotly.newPlot(plotDiv, this.createPlotData(this.props.data), this.createLayout());
+    Plotly.newPlot(bigioPlotDiv, this.createPlotData(this.props.data), this.createLayout());
+    Plotly.newPlot(socketPlotDiv, this.createSocketPlotData(), this.createSocketLayout());
   }
 
   componentWillReceiveProps (nextProps) {
-    const { plotDiv } = this.state;
+    const { bigioPlotDiv, socketPlotDiv } = this.state;
     this.props = nextProps;
-    if (plotDiv) {
-      Plotly.newPlot(plotDiv, this.createPlotData(nextProps.data), this.createLayout());
+    if (bigioPlotDiv) {
+      Plotly.newPlot(bigioPlotDiv, this.createPlotData(nextProps.data), this.createLayout());
+    }
+    if (socketPlotDiv) {
+      Plotly.newPlot(socketPlotDiv, this.createSocketPlotData(), this.createSocketLayout());
     }
   }
 
@@ -42,23 +56,108 @@ class Position extends React.Component {
 
     const ethernetDeltas = [];
     const ethernet = fromJS(ethData);
+    console.log('bigio ethernet');
     ethernet.forEach((row) => {
       delta = row.get('receive') - row.get('publish');
-      ethernetDeltas.push(delta);
+      if (delta > 100) {
+        console.log(delta);
+      } else {
+        ethernetDeltas.push(delta);
+      }
     });
 
     const wifiDeltas = [];
     const wifi = fromJS(wifiData);
+    console.log('bigio wifi');
     wifi.forEach((row) => {
       delta = row.get('receive') - row.get('publish');
-      wifiDeltas.push(delta);
+      if (delta > 100) {
+        console.log(delta);
+      } else {
+        wifiDeltas.push(delta);
+      }
     });
 
     const localDeltas = [];
     const local = fromJS(localData);
+    console.log('bigio local');
     local.forEach((row) => {
       delta = row.get('receive') - row.get('publish');
-      localDeltas.push(delta);
+      if (delta > 100) {
+        console.log(delta);
+      } else {
+        localDeltas.push(delta);
+      }
+    });
+
+    return [
+      {
+        type: 'histogram',
+        x: ethernetDeltas,
+        name: 'Ethernet',
+        opacity: 0.5,
+        marker: {
+          color: 'green'
+        }
+      },
+      {
+        type: 'histogram',
+        x: localDeltas,
+        name: 'Local',
+        opacity: 0.5,
+        marker: {
+          color: 'blue'
+        }
+      },
+      {
+        type: 'histogram',
+        x: wifiDeltas,
+        name: 'Wifi',
+        opacity: 0.5,
+        marker: {
+          color: 'red'
+        }
+      }
+    ];
+  }
+
+  createSocketPlotData (data) {
+    let delta;
+
+    const ethernetDeltas = [];
+    const ethernet = fromJS(socketEthData);
+    console.log('websocket ethernet');
+    ethernet.forEach((row) => {
+      delta = row.get('receive') - row.get('publish');
+      if (delta > 100) {
+        console.log(delta);
+      } else {
+        ethernetDeltas.push(delta);
+      }
+    });
+
+    const wifiDeltas = [];
+    const wifi = fromJS(socketWifiData);
+    console.log('websocket wifi');
+    wifi.forEach((row) => {
+      delta = row.get('receive') - row.get('publish');
+      if (delta > 100) {
+        console.log(delta);
+      } else {
+        wifiDeltas.push(delta);
+      }
+    });
+
+    const localDeltas = [];
+    const local = fromJS(socketLocalData);
+    console.log('websocket local');
+    local.forEach((row) => {
+      delta = row.get('receive') - row.get('publish');
+      if (delta > 100) {
+        console.log(delta);
+      } else {
+        localDeltas.push(delta);
+      }
     });
 
     return [
@@ -95,13 +194,32 @@ class Position extends React.Component {
   createLayout () {
     return {
       title: 'BigIO Round Trip Latency',
-      height: '860',
-      width: '1500',
+      height: '810',
+      width: '1550',
       xaxis: {
-        title: 'Time (ms)'
+        title: 'Time (ms)',
+        range: [0, 100]
       },
       yaxis: {
-        title: 'Frequency'
+        title: 'Frequency',
+        range: [0, 800]
+      },
+      barmode: 'overlay'
+    };
+  }
+
+  createSocketLayout () {
+    return {
+      title: 'Websocket Round Trip Latency',
+      height: '810',
+      width: '1550',
+      xaxis: {
+        title: 'Time (ms)',
+        range: [0, 100]
+      },
+      yaxis: {
+        title: 'Frequency',
+        range: [0, 800]
       },
       barmode: 'overlay'
     };
@@ -114,7 +232,14 @@ class Position extends React.Component {
 
   render () {
     return (
-      <div />
+      <Tabs>
+        <Tab label='BigIO' >
+          <div ref={r => (this.bigioPlotRef = r)}/>
+        </Tab>
+        <Tab label='Websocket' >
+          <div ref={r => (this.socketPlotRef = r)}/>
+        </Tab>
+      </Tabs>
     );
   }
 }

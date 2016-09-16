@@ -158,4 +158,36 @@
       }
     }
   }
+}, {
+  "name": "full1000",
+  "description": "rest to database and publish on bigio and websocket. 1000 connections, 10,000 requests",
+  "iterations": 10000,
+  "connections": 1000,
+  "data": {
+    "totalElapsed": 34521.68521499634,
+    "main": {
+      "meter": {
+        "mean": 290.85808192352687,
+        "count": 10000,
+        "currentRate": 290.8580510546047,
+        "1MinuteRate": 108.35222961101147,
+        "5MinuteRate": 25.73165645878125,
+        "15MinuteRate": 8.836388961542623
+      },
+      "histogram": {
+        "min": 960.804151058197,
+        "max": 18589.443243026733,
+        "sum": 33541651.572026372,
+        "variance": 3525200.647108821,
+        "mean": 3354.165157202637,
+        "stddev": 1877.5517694883465,
+        "count": 10000,
+        "median": 3169.6676050424576,
+        "p75": 3310.366877526045,
+        "p95": 5645.742244464159,
+        "p99": 10751.92444155693,
+        "p999": 18552.596745244624
+      }
+    }
+  }
 }]
