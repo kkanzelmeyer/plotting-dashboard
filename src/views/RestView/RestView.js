@@ -7,7 +7,8 @@ export class RestView extends React.Component {
       <div style={{
         display: 'flex',
         flex: '1',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingLeft: '25px'
       }}>
         <Rest />
       </div>

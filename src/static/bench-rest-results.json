@@ -1,5 +1,5 @@
 [{
-  "name": "bigio",
+  "name": "BigIO",
   "description": "rest to bigio endpoint test",
   "iterations": 100,
   "connections": 1,
@@ -31,7 +31,7 @@
     }
   }
 }, {
-  "name": "control",
+  "name": "Control",
   "description": "rest to response endpoint test. no work performed by the endpoint",
   "iterations": 100,
   "connections": 1,
@@ -63,7 +63,7 @@
     }
   }
 }, {
-  "name": "websocket",
+  "name": "Websocket",
   "description": "rest to websocket endpoint test.",
   "iterations": 100,
   "connections": 1,
@@ -95,7 +95,7 @@
     }
   }
 }, {
-  "name": "database",
+  "name": "Database",
   "description": "rest to database endpoint test",
   "iterations": 100,
   "connections": 1,
@@ -127,7 +127,7 @@
     }
   }
 }, {
-  "name": "full",
+  "name": "Full",
   "description": "rest to database and publish on bigio and websocket test",
   "iterations": 100,
   "connections": 1,

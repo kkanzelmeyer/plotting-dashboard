@@ -60,10 +60,9 @@ class Position extends React.Component {
       }
     });
 
-    let trackSeries = [];
-    tracks.forEach((entry) => {
-
-    })
+    // let trackSeries = [];
+    // tracks.forEach((entry) => {
+    // });
 
     // })
     return [{
@@ -86,8 +85,8 @@ class Position extends React.Component {
     },
     {
       type: 'scatter',
-      x: trackX,
-      y: trackY,
+      // x: trackX,
+      // y: trackY,
       mode: 'markers',
       marker: {
         color: Theme.palette.track,

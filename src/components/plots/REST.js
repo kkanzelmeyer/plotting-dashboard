@@ -65,14 +65,14 @@ class Position extends React.Component {
         type: 'bar',
         x: names,
         y: means,
-        name: 'mean',
+        name: 'Mean',
         opacity: 0.5
       },
       {
         type: 'bar',
         x: names,
         y: medians,
-        name: 'median',
+        name: 'Median',
         opacity: 0.5
       }
     ];
@@ -82,7 +82,10 @@ class Position extends React.Component {
     return {
       title: 'REST Load Times',
       height: '860',
-      width: '1500',
+      width: '1480',
+      font: {
+        size: 20
+      },
       yaxis: {
         title: 'Time (ms)'
       },

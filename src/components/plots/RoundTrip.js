@@ -36,18 +36,18 @@ class Position extends React.Component {
       bigioPlotDiv,
       socketPlotDiv
     });
-    Plotly.newPlot(bigioPlotDiv, this.createPlotData(this.props.data), this.createLayout());
-    Plotly.newPlot(socketPlotDiv, this.createSocketPlotData(), this.createSocketLayout());
+    Plotly.newPlot(bigioPlotDiv, this.createPlotData(this.props.data), this.createLayout('BigIO'));
+    Plotly.newPlot(socketPlotDiv, this.createSocketPlotData(), this.createLayout('Websocket'));
   }
 
   componentWillReceiveProps (nextProps) {
     const { bigioPlotDiv, socketPlotDiv } = this.state;
     this.props = nextProps;
     if (bigioPlotDiv) {
-      Plotly.newPlot(bigioPlotDiv, this.createPlotData(nextProps.data), this.createLayout());
+      Plotly.newPlot(bigioPlotDiv, this.createPlotData(nextProps.data), this.createLayout('BigIO'));
     }
     if (socketPlotDiv) {
-      Plotly.newPlot(socketPlotDiv, this.createSocketPlotData(), this.createSocketLayout());
+      Plotly.newPlot(socketPlotDiv, this.createSocketPlotData(), this.createLayout('Websocket'));
     }
   }
 
@@ -191,31 +191,17 @@ class Position extends React.Component {
     ];
   }
 
-  createLayout () {
+  createLayout (title) {
     return {
-      title: 'BigIO Round Trip Latency',
-      height: '810',
-      width: '1550',
+      title: `${title} Round Trip Latency`,
+      height: '795',
+      width: '1510',
       xaxis: {
         title: 'Time (ms)',
         range: [0, 100]
       },
-      yaxis: {
-        title: 'Frequency',
-        range: [0, 800]
-      },
-      barmode: 'overlay'
-    };
-  }
-
-  createSocketLayout () {
-    return {
-      title: 'Websocket Round Trip Latency',
-      height: '810',
-      width: '1550',
-      xaxis: {
-        title: 'Time (ms)',
-        range: [0, 100]
+      font: {
+        size: 22
       },
       yaxis: {
         title: 'Frequency',

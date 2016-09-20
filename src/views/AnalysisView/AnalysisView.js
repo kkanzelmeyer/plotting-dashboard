@@ -7,7 +7,9 @@ export class AnalysisView extends React.Component {
       <div style={{
         display: 'flex',
         flex: '1',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingLeft: '25px',
+        paddingBottom: '25px'
       }}>
         <RoundTrip />
       </div>

@@ -1,7 +1,7 @@
 import Koa from 'koa';
-import Hapi from 'hapi';
+// import Hapi from 'hapi';
 import { drop } from 'ramda';
-import initMocks from './mocks';
+// import initMocks from './mocks';
 import convert from 'koa-convert';
 import proxy from 'koa-proxy';
 import webpack from 'webpack';
@@ -40,28 +40,28 @@ app.use(convert(historyApiFallback({
 // Apply Webpack HMR Middleware
 // ------------------------------------
 if (config.env === 'development') {
-  const server = new Hapi.Server();
-  server.connection({ port: 8000 });
-  server.register({
-    register: require('h2o2')
-  }, () => {
-    server.start(() => {
-      console.log('Mock API running at:', server.info.uri);
-    });
-  });
-  initMocks(server);
-  server.route({
-    method: '*',
-    path: '/{any*}',
-    config: {
-      handler: (request, reply) =>
-        reply.proxy({ passThrough: true, host: 'mmd-api-staging.herokuapp.com', port: 80, protocol: 'http' }),
-      payload: {
-        output: 'stream',
-        parse: false
-      }
-    }
-  });
+  // const server = new Hapi.Server();
+  // server.connection({ port: 8000 });
+  // server.register({
+  //   register: require('h2o2')
+  // }, () => {
+  //   server.start(() => {
+  //     console.log('Mock API running at:', server.info.uri);
+  //   });
+  // });
+  // initMocks(server);
+  // server.route({
+  //   method: '*',
+  //   path: '/{any*}',
+  //   config: {
+  //     handler: (request, reply) =>
+  //       reply.proxy({ passThrough: true, host: 'mmd-api-staging.herokuapp.com', port: 80, protocol: 'http' }),
+  //     payload: {
+  //       output: 'stream',
+  //       parse: false
+  //     }
+  //   }
+  // });
 
   const compiler = webpack(webpackConfig);
 
