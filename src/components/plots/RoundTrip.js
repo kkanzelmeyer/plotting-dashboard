@@ -194,14 +194,21 @@ class Position extends React.Component {
   createLayout (title) {
     return {
       title: `${title} Round Trip Latency`,
-      height: '795',
-      width: '1510',
+      height: '790',
+      width: '1500',
       xaxis: {
         title: 'Time (ms)',
-        range: [0, 100]
+        range: [0, 80]
       },
       font: {
-        size: 22
+        size: 26
+      },
+      margin: {
+        l: 130,
+        r: 50,
+        b: 100,
+        t: 100,
+        pad: -5
       },
       yaxis: {
         title: 'Frequency',
